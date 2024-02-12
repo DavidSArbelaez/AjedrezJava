@@ -1,25 +1,18 @@
 public class Square {
-    int row;
-    int column;
-    
-  // Getter
-  public int getRow() {
-    return row;
+  Position cords;
+  IPiece piece;
+
+  public Square(Position cord,IPiece piece){
+    this.cords=cord;
+    this.piece=piece;
   }
 
-  // Setter
-  public void setRow(int newRow) {
-    this.row = newRow;
+  public void setPosition(Position pos){
+    cords.setColumna(pos.getColumna());
+    cords.setRow(pos.getRow());
   }
 
-  // Getter
-  public int getColumn() {
-    return column;
+  public String ChessNotation(){
+    return "";
   }
-
-  // Setter
-  public void setColumn(int newColumn) {
-    this.row = newColumn;
-  }
-
 }

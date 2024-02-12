@@ -11,7 +11,7 @@ public abstract class IPiece {
     }
 
     public abstract void validMove();
-    public abstract ArrayList<Position> getValidMoves();
+    public abstract ArrayList<Square> getValidMoves();
 
 
 }
