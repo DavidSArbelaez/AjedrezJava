@@ -8,7 +8,7 @@ public class Pawn implements IPiece{
     }
 
     public Boolean move(Position pos){
-        if validMove(pos){
+        if (validMove(pos)){
             return true;
         }else{
             return false;
