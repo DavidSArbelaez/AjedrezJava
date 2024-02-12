@@ -1,5 +1,3 @@
-package com.mycompany.chess.Modelo;
-
 public class Position {
     private int row;
     private int columna;
