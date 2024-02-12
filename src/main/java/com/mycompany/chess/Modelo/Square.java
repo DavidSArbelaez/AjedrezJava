@@ -12,6 +12,14 @@ public class Square {
     cords.setRow(pos.getRow());
   }
 
+  public Boolean state(){
+    if (piece != null) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   public String ChessNotation(){
     return "";
   }

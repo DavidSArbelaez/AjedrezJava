@@ -3,9 +3,9 @@ import java.util.ArrayList;
 public abstract class IPiece {
 
     Position coords;
-    string color;
+    String color;
     
-    public IPiece(int row,int col,string color){
+    public IPiece(int row,int col,String color){
         this.coords = new Position(row,col);
         this.color = color;
     }
