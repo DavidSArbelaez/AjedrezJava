@@ -10,8 +10,9 @@ public abstract class IPiece {
         this.color = color;
     }
 
-    public abstract void validMove();
+    public abstract Boolean validMove(Position pos);
     public abstract ArrayList<Square> getValidMoves();
+    public abstract Boolean move(Position pos);
 
 
 }
