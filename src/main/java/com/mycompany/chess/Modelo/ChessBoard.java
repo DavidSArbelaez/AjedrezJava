@@ -1,5 +1,5 @@
 public class ChessBoard {
-  Square[][] square=new square[8][8];
+  Square[][] square=new Square[8][8];
 
   public void initBoard(){
   }
@@ -7,7 +7,7 @@ public class ChessBoard {
   public void displayBoard(){
   }
 
-  publid void updateBoard(){
+  public void updateBoard(){
   }
   
 }
