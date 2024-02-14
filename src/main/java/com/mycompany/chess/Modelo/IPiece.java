@@ -10,6 +10,11 @@ public abstract class IPiece {
         this.color = color;
     }
 
+    public void setPosition(Position c){
+        this.coords.setColumna(c.getColumna());
+        this.coords.setRow(c.getRow());
+    }
+
     public abstract Boolean validMove(Position pos);
     public abstract ArrayList<Square> getValidMoves();
     public abstract Boolean move(Position pos);

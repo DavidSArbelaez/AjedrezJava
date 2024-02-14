@@ -6,7 +6,7 @@ public class ChessBoard {
   }
 
   public void initBoard(){
-  
+
   }
 
   public void displayBoard(){
