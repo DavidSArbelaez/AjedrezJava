@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 public class Pawn implements IPiece{
+
+
     public Boolean validMove(Position pos){
         
         
@@ -12,7 +15,20 @@ public class Pawn implements IPiece{
         return true;
     }
 
+    private forwardMove(){
+        
+    }
+
+    public void createValidMoves(){
+        ArrayList<Square> validMoves = new ArrayList<>();
+
+    }
+
     public ArrayList<Square> getValidMoves(){
+
+
+
+
 
         return null;
     }

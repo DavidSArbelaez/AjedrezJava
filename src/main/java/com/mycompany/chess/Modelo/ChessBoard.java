@@ -9,6 +9,9 @@ public class ChessBoard {
 
   }
 
+
+  //Controlador items
+  
   public void displayBoard(){
   }
 
