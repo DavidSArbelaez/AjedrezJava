@@ -1,12 +1,9 @@
 import java.util.ArrayList;
 public class Pawn implements IPiece{
 
+    
 
-    public Boolean validMove(Position pos){
-        
-        
-        return true;
-    }
+    
 
     /*
      * La idea es verificar si se puede realizar la captura al paso,para accionar asi
@@ -16,7 +13,7 @@ public class Pawn implements IPiece{
     }
 
     private forwardMove(){
-        
+
     }
 
     public void createValidMoves(){
@@ -31,13 +28,5 @@ public class Pawn implements IPiece{
 
 
         return null;
-    }
-
-    public Boolean move(Position pos){
-        if (validMove(pos)){
-            return true;
-        }else{
-            return false;
-        }
     }
 }
