@@ -29,7 +29,7 @@ public class Square {
     return this.getPosition();
   }
 
-  private Boolean isValidMove(){
+  private Boolean move(){
     lista = this.piece.getValidMoves();
 
     for (Square sq : lista) {
