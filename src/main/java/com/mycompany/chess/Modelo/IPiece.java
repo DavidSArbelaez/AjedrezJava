@@ -12,6 +12,7 @@ public abstract class IPiece {
     public IPiece(int row,int col,String color){
         this.coords = new Position(row,col);
         this.color = color;
+        this.validMoves = new ArrayList();
     }
 
     public void setPosition(Position c){
@@ -22,6 +23,7 @@ public abstract class IPiece {
     public abstract ArrayList<Square> getValidMoves();
     
     public Boolean move(Position pos){
+        this.validMoves = getValidMoves();
         if (validMove(pos)){
             return true;
         }else{
