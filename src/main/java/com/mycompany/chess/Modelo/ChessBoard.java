@@ -27,6 +27,7 @@ public class ChessBoard {
   // Controlador items
 
   public void displayBoard() {
+    
   }
 
   public void updateBoard() {
