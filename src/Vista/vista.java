@@ -10,7 +10,7 @@ public class vista extends JFrame {
 
     private Map<String, ImageIcon> pieceImages;
 
-    public ChessBoardView() {
+    public vista() {
         initializePieceImages();
         initializeGUI();
     }
@@ -32,31 +32,40 @@ public class vista extends JFrame {
         
     }
 
-    private void initializeGUI() {
-        setTitle("Ajedrez MVC");
+   private void initializeGUI() {
+        setTitle("Ajedrez");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Crea un JLabel con la imagen de fondo del tablero
         JLabel boardLabel = new JLabel(new ImageIcon("src/media/tablero.jpg"));
         boardLabel.setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
+
+        String[][] initialBoard = {
+                {"black_rook", "black_knight", "black_bishop", "black_queen", "black_king", "black_bishop", "black_knight", "black_rook"},
+                {"black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn"},
+                {"", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", ""},
+                {"", "", "", "", "", "", "", ""},
+                {"white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn"},
+                {"white_rook", "white_knight", "white_bishop", "white_queen", "white_king", "white_bishop", "white_knight", "white_rook"}
+        };
 
         // Agrega las casillas al tablero (dentro del JLabel)
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
                 JPanel square = new JPanel();
                 square.setBackground((row + col) % 2 == 0 ? Color.WHITE : Color.BLACK);
+
+                // Agrega la pieza al cuadrado si hay una en la posición del tablero
+                String piece = initialBoard[row][col];
+                if (!piece.isEmpty()) {
+                    square.add(new JLabel(pieceImages.get(piece)));
+                }
+
                 boardLabel.add(square);
             }
         }
-
-        // Agrega las fichas al tablero (ajusta según la lógica del juego)
-        // Por ejemplo, puedes tener un modelo de ajedrez que contenga la disposición inicial de las fichas.
-        // Recorre el modelo y coloca las imágenes en las casillas correspondientes.
-
-        // Ejemplo:
-        // JPanel square = (JPanel) boardLabel.getComponent(8 * row + col);
-        // square.add(new JLabel(pieceImages.get("white_pawn")));
 
         // Agrega el JLabel con el tablero al centro del JFrame
         add(boardLabel, BorderLayout.CENTER);
