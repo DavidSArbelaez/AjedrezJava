@@ -3,14 +3,14 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class vista extends JFrame {
+public class Vista extends JFrame {
 
     private static final int BOARD_SIZE = 8;
     private static final int SQUARE_SIZE = 64;
 
     private Map<String, ImageIcon> pieceImages;
 
-    public vista() {
+    public Vista() {
         initializePieceImages();
         initializeGUI();
     }
