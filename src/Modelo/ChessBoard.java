@@ -1,11 +1,10 @@
-import java.util.ArrayList;
 
 public class ChessBoard {
   private static ChessBoard instance;
-  private ArrayList<Square> squares;
+  private Square[][] board;
 
   public ChessBoard() {
-    squares = new ArrayList<>();
+    board = new Square[8][8];
     initBoard();
   }
 
@@ -20,9 +19,21 @@ public class ChessBoard {
     return instance;
   }
 
-  public ArrayList<Square> getSquares() {
-    return squares;
+  public boolean isSquareValid(int row, int column) {
+      return row >= 1 && row <= 8 && column >= 1 && column <= 8;
   }
+  
+  public Square[][] getSquares() {
+    return board;
+  }
+  
+  public IPiece getPieceAt(int row, int column) {
+	  if (!isSquareValid(row, column)) {
+          throw new IllegalArgumentException("Coordenadas de casilla no válidas");
+      }
+
+      return board[row - 1][column - 1].getPiece();
+	}
 
   // Controlador items
 

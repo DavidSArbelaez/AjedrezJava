@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Square {
   protected Position cords;
   private IPiece piece;
@@ -16,24 +18,23 @@ public class Square {
     this.piece=null;
   }
 
-
-  public Boolean state(){
-    if (piece != null) {
-      return true;
-    }else{
-      return false;
-    }
-  }
-
   public Position getPosition(){
     return this.getPosition();
   }
+  
+  public IPiece getPiece() {
+	  return this.piece;
+  }
 
-  private Boolean move(){
-    lista = this.piece.getValidMoves();
+  
+  /*
+   * Función que verifica si la ficha a mover tinee el movimiento valido 
+   */
+  private void move(){
+    ArrayList<Square> lista = this.piece.getValidMoves();
 
     for (Square sq : lista) {
-      if(sq.getPosition().getColumna()==this.cords.getPosition().getColumna() && sq.getPosition().getRow()==this.cords.getPosition().getRow()){
+      if(sq.getPosition().getColumna()==this.cords.getColumna() && sq.getPosition().getRow()==this.cords.getRow()){
         setPiece(sq.piece);
       }
     }
