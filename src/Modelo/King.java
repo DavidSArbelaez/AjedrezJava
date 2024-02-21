@@ -14,8 +14,8 @@ public class King extends IPiece {
         int[] rowDirections = {-1,  0,  1};
         int[] colDirections = {-1,  0,  1};
 
-        int currentRow = this.coords.getRow();
-        int currentColumn = this.coords.getColumna();
+        int currentRow = this.currentPosition.getRow();
+        int currentColumn = this.currentPosition.getColumn();
 
         for (int rowDirection : rowDirections) {
             for (int colDirection : colDirections) {

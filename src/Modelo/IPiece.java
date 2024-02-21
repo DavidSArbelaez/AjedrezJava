@@ -5,17 +5,17 @@ import java.util.ArrayList;
 /*Usar pojo y dto para comunicar las clases
 */
 public abstract class IPiece {
-    protected Position coords;
+    protected Position currentPosition;
     protected String color;
     
     public IPiece(int row,int col,String color){
-        this.coords = new Position(row,col);
+        this.currentPosition = new Position(row,col);
         this.color = color;
     }
 
     public void setPosition(Position c){
-        this.coords.setColumna(c.getColumna());
-        this.coords.setRow(c.getRow());
+        this.currentPosition.setColumna(c.getColumn());
+        this.currentPosition.setRow(c.getRow());
     }
 
     public abstract ArrayList<Square> getValidMoves();
@@ -35,7 +35,7 @@ public abstract class IPiece {
      */
     public Boolean validMove(Position pos,ArrayList<Square> validMoves){
         for (Square s : validMoves) {
-            if (s.getPosition().getColumna()==pos.getColumna() && s.getPosition().getRow()==pos.getRow()){
+            if (s.getPosition().getColumn()==pos.getColumn() && s.getPosition().getRow()==pos.getRow()){
                 return true;
             }
         }

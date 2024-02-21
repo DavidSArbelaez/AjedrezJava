@@ -9,7 +9,7 @@ public class Square {
     this.piece=null;
   }
 
-  private void setPiece(IPiece piece){
+  public void setPiece(IPiece piece){
     this.piece = piece;
     this.piece.setPosition(cords);
   }
@@ -34,7 +34,7 @@ public class Square {
     ArrayList<Square> lista = this.piece.getValidMoves();
 
     for (Square sq : lista) {
-      if(sq.getPosition().getColumna()==this.cords.getColumna() && sq.getPosition().getRow()==this.cords.getRow()){
+      if(sq.getPosition().getColumn()==this.cords.getColumn() && sq.getPosition().getRow()==this.cords.getRow()){
         setPiece(sq.piece);
       }
     }

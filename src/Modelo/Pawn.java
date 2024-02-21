@@ -23,8 +23,8 @@ public class Pawn extends IPiece{
         ChessBoard board = ChessBoard.getInstance();
         ArrayList<Square> validMoves= new ArrayList<>();
         
-        int currentRow = this.coords.getRow();
-        int currentColumn = this.coords.getColumna();
+        int currentRow = this.currentPosition.getRow();
+        int currentColumn = this.currentPosition.getColumn();
         
         //	Se verifica el color para saber la dirección en que va
         // -1 para negras y 1 para blancas
