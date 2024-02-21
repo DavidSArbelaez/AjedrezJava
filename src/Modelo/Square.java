@@ -26,20 +26,6 @@ public class Square {
 	  return this.piece;
   }
 
-  
-  /*
-   * Función que verifica si la ficha a mover tinee el movimiento valido 
-   */
-  private void move(){
-    ArrayList<Square> lista = this.piece.getValidMoves();
-
-    for (Square sq : lista) {
-      if(sq.getPosition().getColumn()==this.cords.getColumn() && sq.getPosition().getRow()==this.cords.getRow()){
-        setPiece(sq.piece);
-      }
-    }
-  }
-
   public String ChessNotation(){
     return "";
   }

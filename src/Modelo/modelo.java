@@ -19,7 +19,7 @@ public class modelo {
     }
 
     public void movePiece(IPiece piece, int newCol, int newRow){
-        piece.move(null)
+        piece.move();
 
     }
 

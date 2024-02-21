@@ -23,6 +23,9 @@ public abstract class IPiece {
     public Boolean move(Position pos){
     	ArrayList<Square> validMoves = getValidMoves();
         if (validMove(pos,validMoves)){
+            ChessBoard board = ChessBoard.getInstance();
+            board.resetSquare(pos);
+            board.getSquares()[pos.getRow()-1][pos.getColumn()-1].setPiece(this);
             return true;
         }else{
             return false;
