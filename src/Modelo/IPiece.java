@@ -36,8 +36,8 @@ public abstract class IPiece {
      *  si esta en la lista,significa que es legal por lo tanto es valido
      */
     public Boolean validMove(Position pos){
-        for (Position position : validMoves) {
-            if (position.equals(pos)){
+        for (Square s : validMoves) {
+            if (s.getPosition().getColumna()==pos.getColumna() && s.getPosition().getRow()==pos.getRow()){
                 return true;
             }
         }
