@@ -16,11 +16,20 @@ public class vista extends JFrame {
     }
 
     private void initializePieceImages() {
-        // Carga las imágenes de las fichas (ajusta las rutas según tus archivos)
         pieceImages = new HashMap<>();
-        pieceImages.put("white_pawn", new ImageIcon("path/to/white_pawn.png"));
-        pieceImages.put("black_pawn", new ImageIcon("path/to/black_pawn.png"));
-        // Agrega más imágenes para las otras fichas
+        pieceImages.put("white_pawn", new ImageIcon("src/media/peon_b.png"));
+        pieceImages.put("black_pawn", new ImageIcon("src/media/peon_n.png"));
+        pieceImages.put("black_king", new ImageIcon("src/media/rey_n.png"));
+        pieceImages.put("white_king", new ImageIcon("src/media/rey_b.png"));
+        pieceImages.put("black_queen", new ImageIcon("src/media/reina_n.png"));
+        pieceImages.put("white_queen", new ImageIcon("src/media/reina_n.png"));
+        pieceImages.put("black_bishop", new ImageIcon("src/media/arfil_n.png"));
+        pieceImages.put("white_bishop", new ImageIcon("src/media/arfil_b.png"));
+        pieceImages.put("black_knight", new ImageIcon("src/media/caballo_n.png"));
+        pieceImages.put("white_knight", new ImageIcon("src/media/horse_b.png"));
+        pieceImages.put("black_rook", new ImageIcon("src/media/torre_n.png"));
+        pieceImages.put("white_rook", new ImageIcon("src/media/torre_b.png"));
+        
     }
 
     private void initializeGUI() {
@@ -29,7 +38,7 @@ public class vista extends JFrame {
         setLayout(new BorderLayout());
 
         // Crea un JLabel con la imagen de fondo del tablero
-        JLabel boardLabel = new JLabel(new ImageIcon("path/to/board_background.jpg"));
+        JLabel boardLabel = new JLabel(new ImageIcon("src/media/tablero.jpg"));
         boardLabel.setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
 
         // Agrega las casillas al tablero (dentro del JLabel)
