@@ -13,7 +13,6 @@ public class modelo {
 
     public void turn(String color, IPiece piece, int newCol, int newRow) {
         // Obtener todas las piezas del jugador actual
-        ArrayList<IPiece> currentPlayerPieces = board.getPiecesByColor(currentPlayerColor);
         movePiece(piece, newCol, newRow);
         
     }

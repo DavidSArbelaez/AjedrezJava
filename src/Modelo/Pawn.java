@@ -14,11 +14,6 @@ public class Pawn extends IPiece{
         return true;
     }
 
-    public void createValidMoves(){
-        ArrayList<Square> validMoves = new ArrayList<>();
-
-    }
-
     public ArrayList<Square> getValidMoves(){
         ChessBoard board = ChessBoard.getInstance();
         ArrayList<Square> validMoves= new ArrayList<>();
@@ -26,31 +21,32 @@ public class Pawn extends IPiece{
         int currentRow = this.currentPosition.getRow();
         int currentColumn = this.currentPosition.getColumn();
         
-        //	Se verifica el color para saber la dirección en que va
+        //	Se verifica el color para saber la direcciï¿½n en que va
         // -1 para negras y 1 para blancas
         int forwardDirection = (this.color.compareToIgnoreCase("White")==0) ? 1 : -1;
         
-        forwardMove(validMoves,board, forwardDirection, currentRow, currentColumn);
+        validMoves=forwardMove(validMoves,board, forwardDirection, currentRow, currentColumn);
         
-        addFirstMove(validMoves,board, forwardDirection, currentRow, currentColumn);
+        validMoves=addFirstMove(validMoves,board, forwardDirection, currentRow, currentColumn);
         
-        addDiagonalCaptures(validMoves, board, forwardDirection, currentRow, currentColumn);
+        validMoves=addDiagonalCaptures(validMoves, board, forwardDirection, currentRow, currentColumn);
         
         
-        return null;
+        return validMoves;
     }
     
-    private void forwardMove(ArrayList<Square> validMoves,ChessBoard board, int forwardDirection, int currentRow, int currentColumn) {
-    	// Se calcula cual es la fila delante del peón,basandose en su posición actual y la dirección hacia adelante
+    private ArrayList<Square> forwardMove(ArrayList<Square> validMoves,ChessBoard board, int forwardDirection, int currentRow, int currentColumn) {
+    	// Se calcula cual es la fila delante del peï¿½n,basandose en su posiciï¿½n actual y la direcciï¿½n hacia adelante
     	int forwardOneRow = currentRow + forwardDirection;
-    	// Verifica si la casilla delante del peón es válida en el tablero y si está vacía
+    	// Verifica si la casilla delante del peï¿½n es vï¿½lida en el tablero y si estï¿½ vacï¿½a
         if (board.isSquareValid(forwardOneRow, currentColumn) && board.getPieceAt(forwardOneRow, currentColumn) == null) {
-            // Si la casilla es válida y está vacía, se agrega a la lista de movimientos válidos
+            // Si la casilla es vï¿½lida y estï¿½ vacï¿½a, se agrega a la lista de movimientos vï¿½lidos
             validMoves.add(new Square(new Position(forwardOneRow, currentColumn),null));
         }
+        return validMoves;
     }
     
-    private void addFirstMove(ArrayList<Square> validMoves,ChessBoard board, int forwardDirection, int currentRow, int currentColumn) {
+    private ArrayList<Square> addFirstMove(ArrayList<Square> validMoves,ChessBoard board, int forwardDirection, int currentRow, int currentColumn) {
         //Se calcula la fila inicial del peon en base a su color
     	int initialRow = (this.color.compareToIgnoreCase("White")==0) ? 2 : 7;
         
@@ -61,9 +57,10 @@ public class Pawn extends IPiece{
                 validMoves.add(new Square(new Position(forwardTwoRows, currentColumn), null));
             }
         }
+        return validMoves;
     }
     
-    private void addDiagonalCaptures(ArrayList<Square> validMoves, ChessBoard board, int forwardDirection, int currentRow, int currentColumn) {
+    private ArrayList<Square> addDiagonalCaptures(ArrayList<Square> validMoves, ChessBoard board, int forwardDirection, int currentRow, int currentColumn) {
         int forwardOneRow = currentRow + forwardDirection;
 
         // Captura en diagonal izquierda
@@ -83,6 +80,7 @@ public class Pawn extends IPiece{
             	validMoves.add(new Square(new Position(forwardOneRow, rightColumn),null));
             }
         }
+        return validMoves;
     }
 }
     
@@ -115,7 +113,7 @@ public class Pawn extends Piece {
         int currentRow = currentPosition.getRow();
         int currentColumn = currentPosition.getColumn();
 
-        // Dirección hacia adelante dependiendo del color
+        // Direcciï¿½n hacia adelante dependiendo del color
         int forwardDirection = (color == Color.WHITE) ? 1 : -1;
 
         // Movimientos hacia adelante
@@ -134,11 +132,11 @@ public class Pawn extends Piece {
     }
 
     private void addEnPassantCapture(List<Square> validMoves, ChessBoard board, int forwardDirection, int currentRow, int currentColumn) {
-        // Verificar si la captura al paso está disponible en la columna adyacente
+        // Verificar si la captura al paso estï¿½ disponible en la columna adyacente
         int leftColumn = currentColumn - 1;
         int rightColumn = currentColumn + 1;
 
-        // Para la captura al paso, la pieza actual debe estar en una fila específica y la pieza adyacente debe ser un peón enemigo que acaba de realizar un movimiento de dos casillas
+        // Para la captura al paso, la pieza actual debe estar en una fila especï¿½fica y la pieza adyacente debe ser un peï¿½n enemigo que acaba de realizar un movimiento de dos casillas
         if (board.isSquareValid(currentRow, leftColumn)) {
             Square leftSquare = board.getSquares()[currentRow - 1][leftColumn - 1];
             if (leftSquare.getPiece() instanceof Pawn && leftSquare.getPiece().getColor() != color) {

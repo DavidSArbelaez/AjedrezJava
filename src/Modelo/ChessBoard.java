@@ -108,7 +108,7 @@ public class ChessBoard {
 		return board[row - 1][column - 1].getPiece();
 	}
 
-	public resetSquare(Position pos){
+	public void resetSquare(Position pos){
 		board[pos.getRow()-1][pos.getColumn()-1].resetSquare();
 	}
 
