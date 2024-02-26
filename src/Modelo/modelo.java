@@ -1,25 +1,22 @@
-public class modelo {
-    ChessBoard board = ChessBoard.getInstance();
-    private String currentPlayerColor;
+package Modelo;
 
-    public modelo() {
-        board = ChessBoard.getInstance();
-    }
+public class Modelo {
+	public void startGame(Player p1) {
+		ChessBoard board = ChessBoard.getInstance();
 
-    public void startGame(){
-        this.board.initBoard();
-        currentPlayerColor = "White"; // Comienza con las blancas
-    }
+		// Se inicializa el tablero
+		board.initBoard();
 
-    public void turn(String color, IPiece piece, int newCol, int newRow) {
-        // Obtener todas las piezas del jugador actual
-        movePiece(piece, newCol, newRow);
-        
-    }
+	}
 
-    public void movePiece(IPiece piece, int newCol, int newRow){
-        piece.move();
+	public Boolean Turn(Player p1, int col, int row, int newCol, int newRow) {
+		ChessBoard board = ChessBoard.getInstance();
+		GameRules rules = new GameRules();
 
-    }
+		rules.isKingInCheck(p1.getColor());
+		rules.isKingInCheckmate(p1.getColor());
 
+		boolean moveResult = board.movePiece(row, col, newRow, newCol);
+		return moveResult;
+	}
 }
