@@ -1,9 +1,21 @@
 package Launcher;
+
 import java.util.Scanner;
 import javax.swing.*;
-import Vista.*;
 import Vista.Vista;
+
 public class main {
+	// Método de ejemplo para validar el movimiento (debes implementar la lógica
+	// real)
+	private static boolean validarMovimiento(int fromRow, int fromCol, int toRow, int toCol) {
+		// Aquí deberías implementar la lógica para validar si el movimiento es
+		// válido
+		// Por ejemplo, verificar si hay una pieza en la ubicación de inicio y si es
+		// posible moverla a la ubicación deseada.
+
+		// Devuelve siempre true para el ejemplo.
+		return true;
+	}
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(() -> {
@@ -33,18 +45,4 @@ public class main {
 			}
 		});
 	}
-
-	// Método de ejemplo para validar el movimiento (debes implementar la lógica
-	// real)
-	private static boolean validarMovimiento(int fromRow, int fromCol, int toRow, int toCol) {
-		// Aquí deberías implementar la lógica para validar si el movimiento es
-		// válido
-		// Por ejemplo, verificar si hay una pieza en la ubicación de inicio y si es
-		// posible moverla a la ubicación deseada.
-
-		// Devuelve siempre true para el ejemplo.
-		return true;
-	}
-}
-
 }
