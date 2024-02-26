@@ -1,14 +1,11 @@
 import java.util.ArrayList;
 
 public class GameRules {
-    private ChessBoard board;
-
-    public GameRules(ChessBoard board) {
-        this.board = board;
-    }
 
     // Método para verificar si el rey está en jaque
     public boolean isKingInCheck(String color) {
+    	
+    	ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
         Position kingPosition = getKingPosition(color);
         if (kingPosition == null) {
             return false;
@@ -18,6 +15,7 @@ public class GameRules {
 
     // Método para obtener la posición del rey
     private Position getKingPosition(String color) {
+    	ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
         for (int row =  0; row <  8; row++) {
             for (int col =  0; col <  8; col++) {
                 IPiece piece = board.getPieceAt(row +  1, col +  1);
@@ -31,6 +29,7 @@ public class GameRules {
 
     // Método para verificar si una casilla está bajo ataque
     private boolean isSquareUnderAttack(Position position, String attackerColor) {
+    	ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
         for (int row =  0; row <  8; row++) {
             for (int col =  0; col <  8; col++) {
                 IPiece piece = board.getPieceAt(row +  1, col +  1);
@@ -49,6 +48,7 @@ public class GameRules {
 
     // Método para verificar si el rey está en jaque mate
     public boolean isKingInCheckmate(String color) {
+    	ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
         if (!isKingInCheck(color)) {
             return false;
         }
