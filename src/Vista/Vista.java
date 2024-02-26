@@ -113,4 +113,34 @@ public class Vista extends JFrame {
         revalidate();
         repaint();
     }
+
+    public void updateBoard(String[][] boardState) {
+        // Obtener el panel del tablero
+        JPanel boardPanel = (JPanel) getContentPane().getComponent(0);
+    
+        // Iterar sobre cada casilla del tablero
+        int componentIndex = 0;
+        for (int row = 0; row < BOARD_SIZE; row++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
+                // Obtener el panel de la casilla actual
+                JPanel squarePanel = (JPanel) boardPanel.getComponent(componentIndex);
+                componentIndex++;
+    
+                // Obtener la pieza en la casilla actual del arreglo
+                String piece = boardState[row][col];
+                // Remover cualquier componente existente en la casilla actual
+                squarePanel.removeAll();
+    
+                // Si hay una pieza en la casilla actual, agregar la imagen correspondiente
+                if (!piece.isEmpty()) {
+                    squarePanel.add(new JLabel(pieceImages.get(piece), SwingConstants.CENTER));
+                }
+    
+                // Refrescar el panel de la casilla actual
+                squarePanel.revalidate();
+                squarePanel.repaint();
+            }
+        }
+    }
+    
 }

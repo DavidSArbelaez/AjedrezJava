@@ -2,11 +2,13 @@ package Modelo;
 
 public class ChessBoard {
 	private static ChessBoard instance;
+	Boolean isGameOver;
 	private Square[][] board;
 
 	public ChessBoard() {
 		board = new Square[8][8];
 		initBoard();
+		this.isGameOver = false;
 	}
 
 	public void initBoard() {
@@ -17,62 +19,84 @@ public class ChessBoard {
 		// Inicializar el tablero con piezas
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
-				// Colocar las piezas blancas en la primera y segunda fila
-				if (row == 1 || row == 6) {
+				// Colocar las piezas blancas en la primera fila
+				if (row == 7) {
 					switch (col) {
-					case 0:
-					case 7:
-						board[row][col] = new Square(new Position(row + 1, col + 1), new Rock(row + 1, col + 1, WHITE));
-						break;
-					case 1:
-					case 6:
-						board[row][col] = new Square(new Position(row + 1, col + 1),
-								new Knight(row + 1, col + 1, WHITE));
-						break;
-					case 2:
-					case 5:
-						board[row][col] = new Square(new Position(row + 1, col + 1),
-								new Bishop(row + 1, col + 1, WHITE));
-						break;
-					case 3:
-						board[row][col] = new Square(new Position(row + 1, col + 1),
-								new Queen(row + 1, col + 1, WHITE));
-						break;
-					case 4:
-						board[row][col] = new Square(new Position(row + 1, col + 1), new King(row + 1, col + 1, WHITE));
-						break;
+						case 0:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Rock(row + 1, col + 1, WHITE));
+							break;
+						case 7:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Rock(row + 1, col + 1, WHITE));
+							break;
+						case 1:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Knight(row + 1, col + 1, WHITE));
+							break;
+						case 6:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Knight(row + 1, col + 1, WHITE));
+							break;
+						case 2:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Bishop(row + 1, col + 1, WHITE));
+							break;
+						case 5:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Bishop(row + 1, col + 1, WHITE));
+							break;
+						case 3:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Queen(row + 1, col + 1, WHITE));
+							break;
+						case 4:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new King(row + 1, col + 1, WHITE));
+							break;
 					}
 				}
 				// Colocar las piezas negras en la sï¿½ptima y octava fila
-				else if (row == 7 || row == 0) {
+				else if (row == 0) {
 					switch (col) {
-					case 0:
-					case 7:
-						board[row][col] = new Square(new Position(row + 1, col + 1), new Rock(row + 1, col + 1, BLACK));
-						break;
-					case 1:
-					case 6:
-						board[row][col] = new Square(new Position(row + 1, col + 1),
-								new Knight(row + 1, col + 1, BLACK));
-						break;
-					case 2:
-					case 5:
-						board[row][col] = new Square(new Position(row + 1, col + 1),
-								new Bishop(row + 1, col + 1, BLACK));
-						break;
-					case 3:
-						board[row][col] = new Square(new Position(row + 1, col + 1),
-								new Queen(row + 1, col + 1, BLACK));
-						break;
-					case 4:
-						board[row][col] = new Square(new Position(row + 1, col + 1), new King(row + 1, col + 1, BLACK));
-						break;
+						case 0:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Rock(row + 1, col + 1, BLACK));
+							break;
+						case 7:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Rock(row + 1, col + 1, BLACK));
+							break;
+						case 1:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Knight(row + 1, col + 1, BLACK));
+							break;
+						case 6:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Knight(row + 1, col + 1, BLACK));
+							break;
+						case 2:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Bishop(row + 1, col + 1, BLACK));
+							break;
+						case 5:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Bishop(row + 1, col + 1, BLACK));
+							break;
+						case 3:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new Queen(row + 1, col + 1, BLACK));
+							break;
+						case 4:
+							board[row][col] = new Square(new Position(row + 1, col + 1),
+									new King(row + 1, col + 1, BLACK));
+							break;
 					}
-				}
-				// Colocar los peones en las filas 2 y 7
-				else if (row == 2 || row == 7) {
+				}else if (row == 1 || row == 6) {
+					
 					board[row][col] = new Square(new Position(row + 1, col + 1),
-							new Pawn(row + 1, col + 1, row == 2 ? WHITE : BLACK));
+							new Pawn(row + 1, col + 1, row == 6 ? WHITE : BLACK));
+
 				}
 				// Dejar las casillas vacï¿½as en el resto
 				else {
@@ -119,26 +143,27 @@ public class ChessBoard {
 	}
 
 	/**
-	 * Obtiene una representación del estado actual del tablero en forma de matriz
+	 * Obtiene una representaciï¿½n del estado actual del tablero en forma de matriz
 	 * de cadenas. Cada cadena representa la pieza en la casilla correspondiente del
 	 * tablero. Las cadenas siguen el formato "ColorTipo", donde: - "Color"
 	 * representa el color de la pieza ("W" para blanco, "B" para negro). - "Tipo"
-	 * representa el tipo de pieza (por ejemplo, "P" para peón, "R" para rey, etc.).
-	 * Si no hay ninguna pieza en una casilla, se representa como una cadena vacía.
+	 * representa el tipo de pieza (por ejemplo, "P" para peï¿½n, "R" para rey, etc.).
+	 * Si no hay ninguna pieza en una casilla, se representa como una cadena vacï¿½a.
 	 * 
 	 * @return Una matriz de cadenas que representa el estado del tablero.
 	 */
 	public String[][] getBoardState() {
+		System.out.println("Ingreso a board state");
 		String[][] boardState = new String[8][8]; // Matriz para almacenar el estado del tablero
 		for (int row = 0; row < 8; row++) { // Iterar sobre las filas del tablero
 			for (int col = 0; col < 8; col++) { // Iterar sobre las columnas del tablero
 				IPiece piece = board[row][col].getPiece(); // Obtener la pieza en la casilla actual
 				if (piece != null) { // Si hay una pieza en la casilla
 					// Representar la pieza en la casilla como una cadena (por ejemplo, "WP" para un
-					// peón blanco)
+					// peï¿½n blanco)
 					boardState[row][col] = piece.color.charAt(0) + piece.getClass().getSimpleName().substring(0, 1);
 				} else { // Si no hay una pieza en la casilla
-					boardState[row][col] = ""; // Representar la casilla como una cadena vacía
+					boardState[row][col] = ""; // Representar la casilla como una cadena vacï¿½a
 				}
 			}
 		}
@@ -150,14 +175,11 @@ public class ChessBoard {
 		// Imprimir el tablero fila por fila
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
-				// Imprimir la representación de la pieza en la casilla actual
+				// Imprimir la representaciï¿½n de la pieza en la casilla actual
 				System.out.print(boardState[row][col] + " ");
 			}
-			System.out.println(); // Saltar a la siguiente línea para imprimir la siguiente fila
+			System.out.println(); // Saltar a la siguiente lï¿½nea para imprimir la siguiente fila
 		}
-	}
-
-	public void updateBoard() {
 	}
 
 }

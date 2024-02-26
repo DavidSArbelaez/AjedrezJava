@@ -20,7 +20,7 @@ public class GameRules {
 		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
-				IPiece piece = board.getPieceAt(row + 1, col + 1);
+				IPiece piece = board.getPieceAt(row, col);
 				if (piece instanceof King && piece.color.equals(color)) {
 					return piece.currentPosition;
 				}
