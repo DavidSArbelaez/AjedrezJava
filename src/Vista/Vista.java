@@ -113,11 +113,4 @@ public class Vista extends JFrame {
         revalidate();
         repaint();
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            Vista chessBoardView = new Vista();
-            chessBoardView.setVisible(true);
-        });
-    }
 }
