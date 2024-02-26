@@ -98,11 +98,11 @@ public class ChessBoard {
 	}
 
 	public boolean movePiece(int row, int column, int Mrow, int Mcolumn) {
-		
+
 		IPiece pieza = getPieceAt(row, column);
-		
-		Boolean isMove=pieza.move(new Position(Mrow, Mcolumn));
-		
+
+		Boolean isMove = pieza.move(new Position(Mrow, Mcolumn));
+
 		return isMove;
 	}
 
@@ -118,10 +118,43 @@ public class ChessBoard {
 		board[pos.getRow() - 1][pos.getColumn() - 1].resetSquare();
 	}
 
-	// Controlador items
+	/**
+	 * Obtiene una representación del estado actual del tablero en forma de matriz
+	 * de cadenas. Cada cadena representa la pieza en la casilla correspondiente del
+	 * tablero. Las cadenas siguen el formato "ColorTipo", donde: - "Color"
+	 * representa el color de la pieza ("W" para blanco, "B" para negro). - "Tipo"
+	 * representa el tipo de pieza (por ejemplo, "P" para peón, "R" para rey, etc.).
+	 * Si no hay ninguna pieza en una casilla, se representa como una cadena vacía.
+	 * 
+	 * @return Una matriz de cadenas que representa el estado del tablero.
+	 */
+	public String[][] getBoardState() {
+		String[][] boardState = new String[8][8]; // Matriz para almacenar el estado del tablero
+		for (int row = 0; row < 8; row++) { // Iterar sobre las filas del tablero
+			for (int col = 0; col < 8; col++) { // Iterar sobre las columnas del tablero
+				IPiece piece = board[row][col].getPiece(); // Obtener la pieza en la casilla actual
+				if (piece != null) { // Si hay una pieza en la casilla
+					// Representar la pieza en la casilla como una cadena (por ejemplo, "WP" para un
+					// peón blanco)
+					boardState[row][col] = piece.color.charAt(0) + piece.getClass().getSimpleName().substring(0, 1);
+				} else { // Si no hay una pieza en la casilla
+					boardState[row][col] = ""; // Representar la casilla como una cadena vacía
+				}
+			}
+		}
+		return boardState; // Devolver la matriz que representa el estado del tablero
+	}
 
 	public void displayBoard() {
-
+		String[][] boardState = getBoardState(); // Obtener el estado actual del tablero
+		// Imprimir el tablero fila por fila
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				// Imprimir la representación de la pieza en la casilla actual
+				System.out.print(boardState[row][col] + " ");
+			}
+			System.out.println(); // Saltar a la siguiente línea para imprimir la siguiente fila
+		}
 	}
 
 	public void updateBoard() {

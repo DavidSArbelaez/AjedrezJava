@@ -2,7 +2,7 @@ package Launcher;
 import java.util.Scanner;
 import javax.swing.*;
 import Vista.*;
-
+import Vista.Vista;
 public class main {
 
 	public static void main(String[] args) {
