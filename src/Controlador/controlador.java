@@ -1,6 +1,7 @@
 package Controlador;
 
 import Vista.Vista;
+import java.util.Scanner;
 import Modelo.Modelo;
 
 /**
@@ -22,6 +23,10 @@ public class controlador {
 		this.tablero = modelo.getBoard();
 
 	}
+	
+	public void pruebas() {
+		
+	}
 
 	public void turn() {
 
@@ -31,11 +36,14 @@ public class controlador {
 		// - fila actual
 		// - Columna nueva
 		// - fila nueva
-
+		
 		int col = 0, row = 0, colNew = 0, rowNew = 0;
 
-		this.modelo.Turn(turnNum, col, row, colNew, rowNew);
+		Boolean isValidTurn = this.modelo.Turn(turnNum, col, row, colNew, rowNew);
+		if(isValidTurn) {
+			this.turnNum = this.turnNum + 1;
+		}
 
-		this.turnNum = this.turnNum + 1;
+		
 	}
 }
