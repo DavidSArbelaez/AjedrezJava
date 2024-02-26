@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GameRules {
 
-	// Método para verificar si el rey está en jaque
+	// Mï¿½todo para verificar si el rey estï¿½ en jaque
 	public boolean isKingInCheck(String color) {
 
 		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
@@ -15,7 +15,7 @@ public class GameRules {
 		return isSquareUnderAttack(kingPosition, color);
 	}
 
-	// Método para obtener la posición del rey
+	// Mï¿½todo para obtener la posiciï¿½n del rey
 	private Position getKingPosition(String color) {
 		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
 		for (int row = 0; row < 8; row++) {
@@ -29,7 +29,7 @@ public class GameRules {
 		return null;
 	}
 
-	// Método para verificar si una casilla está bajo ataque
+	// Mï¿½todo para verificar si una casilla estï¿½ bajo ataque
 	private boolean isSquareUnderAttack(Position position, String attackerColor) {
 		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
 		for (int row = 0; row < 8; row++) {
@@ -48,7 +48,7 @@ public class GameRules {
 		return false;
 	}
 
-	// Método para verificar si el rey está en jaque mate
+	// Mï¿½todo para verificar si el rey estï¿½ en jaque mate
 	public boolean isKingInCheckmate(String color) {
 		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
 		if (!isKingInCheck(color)) {
@@ -72,5 +72,50 @@ public class GameRules {
 			}
 		}
 		return true;
+	}
+
+	// MÃ©todo para verificar si hay material insuficiente en el tablero
+	public boolean insufficientMaterial() {
+		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
+		// Contadores para piezas que no sean reyes
+		int numNonKingPiecesWhite = 0;
+		int numNonKingPiecesBlack = 0;
+
+		// Iterar sobre todas las casillas del tablero
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				IPiece piece = board.getPieceAt(row + 1, col + 1);
+				if (piece != null && !(piece instanceof King)) {
+					if (piece.color.equals("White")) {
+						numNonKingPiecesWhite++;
+					} else {
+						numNonKingPiecesBlack++;
+					}
+				}
+			}
+		}
+
+		// Si solo quedan reyes o un rey y una pieza no rey para ambos lados, es
+		// material insuficiente
+		if ((numNonKingPiecesWhite == 0 && numNonKingPiecesBlack == 0) ||
+				(numNonKingPiecesWhite == 1 && numNonKingPiecesBlack == 0) ||
+				(numNonKingPiecesWhite == 0 && numNonKingPiecesBlack == 1)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isGameOver() {
+		// Verificar si alguno de los jugadores estÃ¡ en jaque mate
+		if (isKingInCheckmate("White") || isKingInCheckmate("Black")) {
+			return true;
+		}
+
+		// Verificar si no hay suficientes piezas para dar jaque mate
+		if (insufficientMaterial()) {
+			return true;
+		}
+		return false;
 	}
 }

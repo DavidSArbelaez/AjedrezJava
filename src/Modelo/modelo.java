@@ -12,7 +12,6 @@ public class Modelo {
 
 	public String[][] getBoard() {
 		ChessBoard board = ChessBoard.getInstance();
-		
 		return board.getBoardState();
 	}
 
@@ -27,10 +26,18 @@ public class Modelo {
 			player = new Player("Black");
 		}
 
-		rules.isKingInCheck(player.getColor());
-		rules.isKingInCheckmate(player.getColor());
+		
+		if(rules.isKingInCheck(player.getColor())){
+			System.out.println("Estas en jaque,no puedes realizar ese movimiento");
+			return false;
+		}
 
 		boolean moveResult = board.movePiece(row, col, newRow, newCol);
 		return moveResult;
+	}
+
+	public boolean isGameOver(){
+		GameRules rules = new GameRules();
+		return rules.isGameOver();
 	}
 }
