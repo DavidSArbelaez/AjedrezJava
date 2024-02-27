@@ -1,19 +1,32 @@
-package Vista;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Vista extends JFrame {
+    private JPanel[][] chessBoard;
+    private JLabel selectedLabel;
+    private Map<String, ImageIcon> pieceImages;
+
+    private String[][] initialBoard = {
+            {"black_rook", "black_knight", "black_bishop", "black_queen", "black_king", "black_bishop", "black_knight", "black_rook"},
+            {"black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn"},
+            {"", "", "", "", "", "", "", ""},
+            {"", "", "", "", "", "", "", ""},
+            {"", "", "", "", "", "", "", ""},
+            {"", "", "", "", "", "", "", ""},
+            {"white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn"},
+            {"white_rook", "white_knight", "white_bishop", "white_queen", "white_king", "white_bishop", "white_knight", "white_rook"}
+    };
 
     private static final int BOARD_SIZE = 8;
-    private static final int SQUARE_SIZE = 64;
-
-    private Map<String, ImageIcon> pieceImages;
 
     public Vista() {
         initializePieceImages();
-        initializeGUI();
+        initializeUI();
+        initializeChessBoard();
     }
 
     private void initializePieceImages() {
@@ -32,115 +45,101 @@ public class Vista extends JFrame {
         pieceImages.put("white_rook", new ImageIcon("src/media/torre_b.png"));
     }
 
-    private void initializeGUI() {
+    private void initializeUI() {
         setTitle("Ajedrez");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new GridLayout(8, 8));
 
-        // Establece un tamaño específico para la ventana
-        setSize((BOARD_SIZE + 2) * SQUARE_SIZE, (BOARD_SIZE + 2) * SQUARE_SIZE);  // Se añade 2 para los números
+        chessBoard = new JPanel[BOARD_SIZE][BOARD_SIZE];
+        selectedLabel = null;
 
-        setLayout(new BorderLayout());
-
-        JPanel boardPanel = new JPanel(new GridLayout(BOARD_SIZE, BOARD_SIZE));
-        JPanel topNumbersPanel = new JPanel(new GridLayout(1, BOARD_SIZE));  // Panel para los números en la parte superior
-        JPanel bottomNumbersPanel = new JPanel(new GridLayout(1, BOARD_SIZE));  // Panel para los números en la parte inferior
-        JPanel leftNumbersPanel = new JPanel(new GridLayout(BOARD_SIZE, 1));  // Panel para los números en la columna izquierda
-        JPanel rightNumbersPanel = new JPanel(new GridLayout(BOARD_SIZE, 1));  // Panel para los números en la columna derecha
-
-        String[][] initialBoard = {
-                {"black_rook", "black_knight", "black_bishop", "black_queen", "black_king", "black_bishop", "black_knight", "black_rook"},
-                {"black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn", "black_pawn"},
-                {"", "", "", "", "", "", "", ""},
-                {"", "", "", "", "", "", "", ""},
-                {"", "", "", "", "", "", "", ""},
-                {"", "", "", "", "", "", "", ""},
-                {"white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn"},
-                {"white_rook", "white_knight", "white_bishop", "white_queen", "white_king", "white_bishop", "white_knight", "white_rook"}
-        };
-
-        // Agrega las casillas y números al tablero
         for (int row = 0; row < BOARD_SIZE; row++) {
-            // Agrega números en la columna izquierda
-            JLabel leftNumberLabel = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER);
-            leftNumbersPanel.add(leftNumberLabel);
-
             for (int col = 0; col < BOARD_SIZE; col++) {
-                JPanel square = new JPanel(new BorderLayout());
-                square.setBackground((row + col) % 2 == 0 ? Color.WHITE : Color.BLACK);
+                chessBoard[row][col] = new JPanel(new BorderLayout());
+                chessBoard[row][col].setBackground((row + col) % 2 == 0 ? Color.WHITE : Color.BLACK);
 
-                // Agrega la pieza al cuadrado si hay una en la posición del tablero
+                // Agregar un MouseListener para manejar los clics del ratón
+                chessBoard[row][col].addMouseListener(new ChessCellMouseListener(row, col));
+
+                // Configurar el diseño para que las imágenes ocupen todo el espacio de la celda
+                add(chessBoard[row][col]);
+            }
+        }
+
+        pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    private void initializeChessBoard() {
+        // Llenar el tablero con las piezas iniciales e imágenes
+        for (int row = 0; row < BOARD_SIZE; row++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
                 String piece = initialBoard[row][col];
+                JPanel panel = chessBoard[row][col];
+                panel.removeAll();  // Limpiar el contenido
+
+                // Verificar si hay una pieza en la celda
                 if (!piece.isEmpty()) {
-                    square.add(new JLabel(pieceImages.get(piece), SwingConstants.CENTER));
+                    // Configurar la imagen de la pieza
+                    ImageIcon pieceIcon = pieceImages.get(piece);
+                    if (pieceIcon != null) {
+                        JLabel pieceLabel = new JLabel(pieceIcon);
+                        panel.add(pieceLabel, BorderLayout.CENTER);
+                    }
                 }
-
-                // Agrega la etiqueta con las coordenadas
-                JLabel coordinateLabel = new JLabel(String.format("%d-%d", row + 1, col + 1), SwingConstants.CENTER);
-                
-                // Cambia el color del texto en las casillas negras para mejorar la visibilidad
-                coordinateLabel.setForeground(square.getBackground().equals(Color.BLACK) ? Color.WHITE : Color.BLACK);
-                
-                square.add(coordinateLabel, BorderLayout.SOUTH);
-
-                boardPanel.add(square);
             }
-
-            // Agrega números en la parte superior
-            JLabel topNumberLabel = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER);
-            topNumbersPanel.add(topNumberLabel);
-
-            // Agrega números en la parte inferior
-            JLabel bottomNumberLabel = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER);
-            bottomNumbersPanel.add(bottomNumberLabel);
-
-            // Agrega números en la columna derecha
-            JLabel rightNumberLabel = new JLabel(String.valueOf(row + 1), SwingConstants.CENTER);
-            rightNumbersPanel.add(rightNumberLabel);
         }
-
-        // Agrega el tablero y los números al centro del JFrame
-        add(boardPanel, BorderLayout.CENTER);
-
-        // Agrega los números en la parte superior e inferior
-        add(topNumbersPanel, BorderLayout.NORTH);
-        add(bottomNumbersPanel, BorderLayout.SOUTH);
-
-        // Agrega los números en la columna izquierda y derecha
-        add(leftNumbersPanel, BorderLayout.WEST);
-        add(rightNumbersPanel, BorderLayout.EAST);
-
-        // Refresca la vista
-        revalidate();
-        repaint();
     }
 
-    public void updateBoard(String[][] boardState) {
-        // Obtener el panel del tablero
-        JPanel boardPanel = (JPanel) getContentPane().getComponent(0);
-    
-        // Iterar sobre cada casilla del tablero
-        int componentIndex = 0;
+    // Función para actualizar la vista con la información de las piezas
+    public void updateChessBoard(String boardState) {
+        // Verificar que el estado del tablero tenga la longitud esperada
+        if (boardState.length() != 64) {
+            throw new IllegalArgumentException("La longitud del estado del tablero debe ser 64.");
+        }
+
+        int index = 0;
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
-                // Obtener el panel de la casilla actual
-                JPanel squarePanel = (JPanel) boardPanel.getComponent(componentIndex);
-                componentIndex++;
-    
-                // Obtener la pieza en la casilla actual del arreglo
-                String piece = boardState[row][col];
-                // Remover cualquier componente existente en la casilla actual
-                squarePanel.removeAll();
-    
-                // Si hay una pieza en la casilla actual, agregar la imagen correspondiente
-                if (!piece.isEmpty()) {
-                    squarePanel.add(new JLabel(pieceImages.get(piece), SwingConstants.CENTER));
+                char piece = boardState.charAt(index++);
+                JPanel panel = chessBoard[row][col];
+                panel.removeAll();  // Limpiar el contenido
+
+                // Verificar si hay una pieza en la celda
+                if (piece != ' ') {
+                    // Configurar la imagen de la pieza
+                    String pieceKey = piece == 'w' ? "white_" + Character.toLowerCase(boardState.charAt(index - 1)) : "black_" + boardState.charAt(index - 1);
+                    ImageIcon pieceIcon = pieceImages.get(pieceKey);
+                    if (pieceIcon != null) {
+                        JLabel pieceLabel = new JLabel(pieceIcon);
+                        panel.add(pieceLabel, BorderLayout.CENTER);
+                    }
                 }
-    
-                // Refrescar el panel de la casilla actual
-                squarePanel.revalidate();
-                squarePanel.repaint();
+
+                // Volver a pintar el fondo
+                panel.setBackground((row + col) % 2 == 0 ? Color.WHITE : Color.BLACK);
             }
         }
     }
-    
+
+    // Clase interna para manejar los eventos del ratón en las celdas del tablero
+    private class ChessCellMouseListener extends MouseAdapter {
+        private int row;
+        private int col;
+
+        public ChessCellMouseListener(int row, int col) {
+            this.row = row;
+            this.col = col;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            // Puedes agregar aquí cualquier lógica adicional según la celda seleccionada
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Vista());
+    }
 }
