@@ -13,7 +13,7 @@ import Modelo.Modelo;
  */
 public class controlador {
 	Modelo modelo = new Modelo();
-	Vista vista = new Vista();
+	//Vista vista = new Vista();
 	String tablero[][];
 	int turnNum;
 
@@ -24,9 +24,9 @@ public class controlador {
 	public void startGame() {
 		this.modelo.startGame();
 		this.tablero = modelo.getBoard();
-		SwingUtilities.invokeLater(() -> {
+		/*SwingUtilities.invokeLater(() -> {
 			vista.setVisible(true);
-		});
+		});*/
 
 		displayBoard(tablero);
 
@@ -98,7 +98,7 @@ public class controlador {
 
 		tablero = modelo.getBoard();
 
-		vista.updateBoard(tablero);
+		//vista.updateBoard(tablero);
 
 	}
 }

@@ -6,8 +6,6 @@ public class GameRules {
 
 	// M�todo para verificar si el rey est� en jaque
 	public boolean isKingInCheck(String color) {
-
-		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
 		Position kingPosition = getKingPosition(color);
 		if (kingPosition == null) {
 			return false;
@@ -34,7 +32,7 @@ public class GameRules {
 		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
-				IPiece piece = board.getPieceAt(row + 1, col + 1);
+				IPiece piece = board.getPieceAt(row, col);
 				if (piece != null && !piece.color.equals(attackerColor)) {
 					ArrayList<Square> validMoves = piece.getValidMoves();
 					for (Square square : validMoves) {
@@ -56,7 +54,7 @@ public class GameRules {
 		}
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
-				IPiece piece = board.getPieceAt(row + 1, col + 1);
+				IPiece piece = board.getPieceAt(row, col);
 				if (piece != null && piece.color.equals(color)) {
 					ArrayList<Square> validMoves = piece.getValidMoves();
 					for (Square square : validMoves) {
@@ -84,7 +82,7 @@ public class GameRules {
 		// Iterar sobre todas las casillas del tablero
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
-				IPiece piece = board.getPieceAt(row + 1, col + 1);
+				IPiece piece = board.getPieceAt(row, col);
 				if (piece != null && !(piece instanceof King)) {
 					if (piece.color.equals("White")) {
 						numNonKingPiecesWhite++;

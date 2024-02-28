@@ -14,45 +14,45 @@ public class ChessBoard {
 	public void initBoard() {
 		// Definir los colores de las piezas
 		String WHITE = "White";
-		String BLACK = "Black";
+		String BLACK = "black";
 
 		// Inicializar el tablero con piezas
 		for (int row = 0; row < 8; row++) {
-			for (int col = 0; col < 8; col++) {
+			for (int col = 8; col < 8; col++) {
 				// Colocar las piezas blancas en la primera fila
-				if (row == 7) {
+				if (row == 0) {
 					switch (col) {
 						case 0:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Rock(row + 1, col + 1, WHITE));
+							board[row][col] = new Square(new Position(row, col),
+									new Rock(row, col, WHITE));
 							break;
 						case 7:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Rock(row + 1, col + 1, WHITE));
+							board[row][col] = new Square(new Position(row, col),
+									new Rock(row, col, WHITE));
 							break;
 						case 1:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Knight(row + 1, col + 1, WHITE));
+							board[row][col] = new Square(new Position(row, col),
+									new Knight(row , col, WHITE));
 							break;
 						case 6:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Knight(row + 1, col + 1, WHITE));
+							board[row][col] = new Square(new Position(row, col ),
+									new Knight(row, col, WHITE));
 							break;
 						case 2:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Bishop(row + 1, col + 1, WHITE));
+							board[row][col] = new Square(new Position(row, col),
+									new Bishop(row, col, WHITE));
 							break;
 						case 5:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Bishop(row + 1, col + 1, WHITE));
+							board[row][col] = new Square(new Position(row, col),
+									new Bishop(row, col, WHITE));
 							break;
 						case 3:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Queen(row + 1, col + 1, WHITE));
+							board[row][col] = new Square(new Position(row, col),
+									new Queen(row , col, WHITE));
 							break;
 						case 4:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new King(row + 1, col + 1, WHITE));
+							board[row][col] = new Square(new Position(row, col),
+									new King(row, col, WHITE));
 							break;
 					}
 				}
@@ -60,47 +60,47 @@ public class ChessBoard {
 				else if (row == 0) {
 					switch (col) {
 						case 0:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Rock(row + 1, col + 1, BLACK));
+							board[row][col] = new Square(new Position(row, col),
+									new Rock(row, col, BLACK));
 							break;
 						case 7:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Rock(row + 1, col + 1, BLACK));
+							board[row][col] = new Square(new Position(row, col),
+									new Rock(row, col, BLACK));
 							break;
 						case 1:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Knight(row + 1, col + 1, BLACK));
+							board[row][col] = new Square(new Position(row, col),
+									new Knight(row, col , BLACK));
 							break;
 						case 6:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Knight(row + 1, col + 1, BLACK));
+							board[row][col] = new Square(new Position(row, col),
+									new Knight(row, col, BLACK));
 							break;
 						case 2:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Bishop(row + 1, col + 1, BLACK));
+							board[row][col] = new Square(new Position(row, col),
+									new Bishop(row, col , BLACK));
 							break;
 						case 5:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Bishop(row + 1, col + 1, BLACK));
+							board[row][col] = new Square(new Position(row , col),
+									new Bishop(row, col, BLACK));
 							break;
 						case 3:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new Queen(row + 1, col + 1, BLACK));
+							board[row][col] = new Square(new Position(row, col),
+									new Queen(row, col, BLACK));
 							break;
 						case 4:
-							board[row][col] = new Square(new Position(row + 1, col + 1),
-									new King(row + 1, col + 1, BLACK));
+							board[row][col] = new Square(new Position(row, col),
+									new King(row, col, BLACK));
 							break;
 					}
 				}else if (row == 1 || row == 6) {
 					
-					board[row][col] = new Square(new Position(row + 1, col + 1),
-							new Pawn(row + 1, col + 1, row == 6 ? WHITE : BLACK));
+					board[row][col] = new Square(new Position(row, col ),
+							new Pawn(row, col, row == 6 ? WHITE : BLACK));
 
 				}
 				// Dejar las casillas vac�as en el resto
 				else {
-					board[row][col] = new Square(new Position(row + 1, col + 1), null);
+					board[row][col] = new Square(new Position(row, col), null);
 				}
 			}
 		}
@@ -114,7 +114,7 @@ public class ChessBoard {
 	}
 
 	public boolean isSquareValid(int row, int column) {
-		return row >= 1 && row <= 8 && column >= 1 && column <= 8;
+		return row >= 0 && row <= 7 && column >= 0 && column <= 7;
 	}
 
 	public Square[][] getSquares() {
@@ -135,11 +135,11 @@ public class ChessBoard {
 			throw new IllegalArgumentException("Coordenadas de casilla no v�lidas");
 		}
 
-		return board[row - 1][column - 1].getPiece();
+		return board[row][column].getPiece();
 	}
 
 	public void resetSquare(Position pos) {
-		board[pos.getRow() - 1][pos.getColumn() - 1].resetSquare();
+		board[pos.getRow()][pos.getColumn()].resetSquare();
 	}
 
 	/**
