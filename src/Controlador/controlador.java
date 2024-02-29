@@ -33,38 +33,53 @@ public class controlador {
 	}
 
 	public void displayBoard(String[][] boardState) {
-		// Imprimir la parte superior del tablero con las letras de las columnas
-		System.out.print("   ");
-		for (int col = 0; col < boardState[0].length; col++) {
-			System.out.print((char) ('1' + col) + " ");
-		}
-		System.out.println();
-	
-		// Imprimir el borde superior del tablero
-		System.out.print("  ");
-		for (int col = 0; col < boardState[0].length; col++) {
-			System.out.print("--");
-		}
-		System.out.println();
-	
-		// Imprimir el tablero y sus contenidos
-		for (int row = 0; row < boardState.length; row++) {
-			System.out.print((row + 1) + "| "); // Imprimir número de fila
-			for (int col = 0; col < boardState[row].length; col++) {
-				System.out.print(boardState[row][col] + " ");
-			}
-			System.out.println();
-		}
-	
-		// Imprimir el borde inferior del tablero
-		System.out.print("  ");
-		for (int col = 0; col < boardState[0].length; col++) {
-			System.out.print("--");
-		}
-		System.out.println();
-	}
-	
+	    // Imprimir la parte superior del tablero con las letras de las columnas
+	    System.out.print("   ");
+	    for (int col = 0; col < boardState[0].length; col++) {
+	        System.out.print((char) ('A' + col) + " ");
+	    }
+	    System.out.println();
 
+	    // Imprimir el borde superior del tablero
+	    System.out.print("  ");
+	    for (int col = 0; col < boardState[0].length; col++) {
+	        System.out.print("--");
+	    }
+	    System.out.println();
+
+	    // Imprimir el tablero y sus contenidos
+	    for (int row = 0; row < boardState.length; row++) {
+	        System.out.print((row + 1) + "| "); // Imprimir número de fila
+	        for (int col = 0; col < boardState[row].length; col++) {
+	            // Ajustar el ancho de cada cuadrado para que tenga el mismo tamaño
+	            System.out.printf("%-2s", boardState[row][col]);
+	        }
+	        System.out.println();
+	    }
+
+	    // Imprimir el borde inferior del tablero
+	    System.out.print("  ");
+	    for (int col = 0; col < boardState[0].length; col++) {
+	        System.out.print("--");
+	    }
+	    System.out.println();
+	}
+
+	
+	
+	public  void playGame() {
+		Scanner sc = new Scanner(System.in);
+		boolean continuar = true;
+        while (continuar) {
+            turn();
+            System.out.println("¿Desea continuar jugando? (S/N)");
+            String respuesta = sc.nextLine().trim().toUpperCase();
+            if (!respuesta.equals("S")) {
+                continuar = false;
+            }
+        }
+        sc.close();
+    }
 	public void turn() {
 		Scanner sc = new Scanner(System.in);
 		boolean option = false;
@@ -81,7 +96,7 @@ public class controlador {
 			System.out.println("Ingrese el numero de la columna de la pieza a mover:");
 			int fromCol = sc.nextInt() - 1;
 			System.out.println("Ingrese el numero de la fila a mover la pieza:");
-			int toRow = sc.nextInt() - 1;
+			int toRow = sc.nextInt() -1;
 			System.out.println("Ingrese el numero de la columna a mover la pieza:");
 			int toCol = sc.nextInt() - 1;
 
@@ -90,14 +105,16 @@ public class controlador {
 			if (isValidTurn) {
 				System.out.println("Movimiento válido. La pieza se ha movido.");
 				this.turnNum = this.turnNum + 1;
+				modelo.erracePiece(fromRow,fromCol);
 				option=true;
 			}else{
+				
 				System.out.println("Movimiento no válido. Inténtelo de nuevo.");
 			}
 		} while (!option);
 
 		tablero = modelo.getBoard();
-
+		this.displayBoard(tablero);
 		//vista.updateBoard(tablero);
 
 	}

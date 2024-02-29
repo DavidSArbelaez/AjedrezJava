@@ -6,7 +6,11 @@ public class Square {
 
 	public Square(Position cord, IPiece piece) {
 		this.cords = cord;
-		this.piece = null;
+		if (piece==null) {
+			this.piece=null;
+		}else {
+			this.piece=piece;
+		}
 	}
 
 	public void setPiece(IPiece piece) {
@@ -19,14 +23,18 @@ public class Square {
 	}
 
 	public Position getPosition() {
-		return this.getPosition();
+		return this.cords;
 	}
 
 	public IPiece getPiece() {
 		return this.piece;
 	}
 
-	public String ChessNotation() {
-		return "";
-	}
+	@Override
+    public String toString() {
+        return "Square{" +
+                "cords=" + cords +
+                ", piece=" + piece +
+                '}';
+    }
 }

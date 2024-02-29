@@ -2,8 +2,8 @@ package Modelo;
 import java.util.ArrayList;
 
 public class Queen extends IPiece {
-    public Queen(int row, int col, String color) {
-        super(row, col, color);
+    public Queen(Position pos, String color) {
+        super(pos, color);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class Queen extends IPiece {
                 int newRow = currentRow + rowDirection;
                 int newColumn = currentColumn + colDirection;
 
-                // Verificar si la nueva posición es válida y si no hay otra pieza en esa posición
+                // Verificar si la nueva posiciï¿½n es vï¿½lida y si no hay otra pieza en esa posiciï¿½n
                 while (board.isSquareValid(newRow, newColumn)) {
                     IPiece pieceAtNewPosition = board.getPieceAt(newRow, newColumn);
                     if (pieceAtNewPosition == null || !pieceAtNewPosition.color.equals(this.color)) {

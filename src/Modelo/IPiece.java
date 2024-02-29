@@ -9,8 +9,8 @@ public abstract class IPiece {
 	protected Position currentPosition;
 	protected String color;
 
-	public IPiece(int row, int col, String color) {
-		this.currentPosition = new Position(row, col);
+	public IPiece(Position pos, String color) {
+		this.currentPosition = pos;
 		this.color = color;
 	}
 
@@ -23,6 +23,8 @@ public abstract class IPiece {
 
 	public Boolean move(Position pos) {
 		ArrayList<Square> validMoves = getValidMoves();
+		System.out.println(validMoves.size());
+		System.out.println(this.getClass().getSimpleName());
 		if (validMove(pos, validMoves)) {
 			ChessBoard board = ChessBoard.getInstance();
 			board.resetSquare(pos);
@@ -47,5 +49,7 @@ public abstract class IPiece {
 
 		return false;
 	}
+	
+	
 
 }

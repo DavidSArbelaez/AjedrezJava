@@ -3,8 +3,8 @@ package Modelo;
 import java.util.ArrayList;
 
 public class King extends IPiece {
-	public King(int row, int col, String color) {
-		super(row, col, color);
+	public King(Position pos, String color) {
+		super(pos, color);
 	}
 
 	@Override
@@ -24,11 +24,11 @@ public class King extends IPiece {
 				int newRow = currentRow + rowDirection;
 				int newColumn = currentColumn + colDirection;
 
-				// Verificar si la nueva posición es válida
+				// Verificar si la nueva posiciï¿½n es vï¿½lida
 				if (board.isSquareValid(newRow, newColumn)) {
 					IPiece pieceAtNewPosition = board.getPieceAt(newRow, newColumn);
-					// Verificar si la pieza en la nueva posición es de otro color o si la casilla
-					// está vacía
+					// Verificar si la pieza en la nueva posiciï¿½n es de otro color o si la casilla
+					// estï¿½ vacï¿½a
 					if (pieceAtNewPosition == null || pieceAtNewPosition.color != this.color) {
 						validMoves.add(new Square(new Position(newRow, newColumn), null));
 					}

@@ -2,12 +2,9 @@ package Modelo;
 
 public class Modelo {
 	public void startGame() {
-
 		ChessBoard board = ChessBoard.getInstance();
-
 		// Se inicializa el tablero
 		board.initBoard();
-
 	}
 
 	public String[][] getBoard() {
@@ -34,6 +31,11 @@ public class Modelo {
 
 		boolean moveResult = board.movePiece(row, col, newRow, newCol);
 		return moveResult;
+	}
+	
+	public void erracePiece(int row,int col) {
+		ChessBoard board = ChessBoard.getInstance();
+		board.erracePiece(row, col);
 	}
 
 	public boolean isGameOver(){

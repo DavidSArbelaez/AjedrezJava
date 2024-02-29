@@ -12,95 +12,80 @@ public class ChessBoard {
 	}
 
 	public void initBoard() {
-		// Definir los colores de las piezas
-		String WHITE = "White";
-		String BLACK = "black";
-
 		// Inicializar el tablero con piezas
 		for (int row = 0; row < 8; row++) {
-			for (int col = 8; col < 8; col++) {
+			for (int col = 0; col < 8; col++) {
 				// Colocar las piezas blancas en la primera fila
-				if (row == 0) {
+				
+				
+				//Se crea la pocisión de cada cuadrado del tablero
+				Position pos = new Position(row, col);
+				
+				if (row == 7) {
 					switch (col) {
-						case 0:
-							board[row][col] = new Square(new Position(row, col),
-									new Rock(row, col, WHITE));
-							break;
-						case 7:
-							board[row][col] = new Square(new Position(row, col),
-									new Rock(row, col, WHITE));
-							break;
-						case 1:
-							board[row][col] = new Square(new Position(row, col),
-									new Knight(row , col, WHITE));
-							break;
-						case 6:
-							board[row][col] = new Square(new Position(row, col ),
-									new Knight(row, col, WHITE));
-							break;
-						case 2:
-							board[row][col] = new Square(new Position(row, col),
-									new Bishop(row, col, WHITE));
-							break;
-						case 5:
-							board[row][col] = new Square(new Position(row, col),
-									new Bishop(row, col, WHITE));
-							break;
-						case 3:
-							board[row][col] = new Square(new Position(row, col),
-									new Queen(row , col, WHITE));
-							break;
-						case 4:
-							board[row][col] = new Square(new Position(row, col),
-									new King(row, col, WHITE));
-							break;
+					case 0:
+						this.board[row][col] = new Square(pos, new Rock(pos,"WHITE"));
+						
+						break;
+					case 7:
+						this.board[row][col] = new Square(pos, new Rock(pos,"WHITE"));
+						break;
+					case 1:
+						this.board[row][col] = new Square(pos, new Knight(pos,"WHITE"));
+						break;
+					case 6:
+						this.board[row][col] = new Square(pos, new Knight(pos,"WHITE"));
+						break;
+					case 2:
+						this.board[row][col] = new Square(pos, new Bishop(pos,"WHITE"));
+						break;
+					case 5:
+						this.board[row][col] = new Square(pos, new Bishop(pos,"WHITE"));
+						break;
+					case 3:
+						this.board[row][col] = new Square(pos, new Queen(pos,"WHITE"));
+						break;
+					case 4:
+						this.board[row][col] = new Square(pos, new King(pos,"WHITE"));
+						break;
 					}
 				}
 				// Colocar las piezas negras en la s�ptima y octava fila
 				else if (row == 0) {
 					switch (col) {
-						case 0:
-							board[row][col] = new Square(new Position(row, col),
-									new Rock(row, col, BLACK));
-							break;
-						case 7:
-							board[row][col] = new Square(new Position(row, col),
-									new Rock(row, col, BLACK));
-							break;
-						case 1:
-							board[row][col] = new Square(new Position(row, col),
-									new Knight(row, col , BLACK));
-							break;
-						case 6:
-							board[row][col] = new Square(new Position(row, col),
-									new Knight(row, col, BLACK));
-							break;
-						case 2:
-							board[row][col] = new Square(new Position(row, col),
-									new Bishop(row, col , BLACK));
-							break;
-						case 5:
-							board[row][col] = new Square(new Position(row , col),
-									new Bishop(row, col, BLACK));
-							break;
-						case 3:
-							board[row][col] = new Square(new Position(row, col),
-									new Queen(row, col, BLACK));
-							break;
-						case 4:
-							board[row][col] = new Square(new Position(row, col),
-									new King(row, col, BLACK));
-							break;
+					case 0:
+						this.board[row][col] = new Square(pos, new Rock(pos,"BLACK"));
+						break;
+					case 7:
+						this.board[row][col] = new Square(pos, new Rock(pos,"BLACK"));
+						break;
+					case 1:
+						this.board[row][col] = new Square(pos, new Knight(pos,"BLACK"));
+						break;
+					case 6:
+						this.board[row][col] = new Square(pos, new Knight(pos,"BLACK"));
+						break;
+					case 2:
+						this.board[row][col] = new Square(pos, new Bishop(pos,"BLACK"));
+						break;
+					case 5:
+						this.board[row][col] = new Square(pos, new Bishop(pos,"BLACK"));
+						break;
+					case 3:
+						this.board[row][col] = new Square(pos, new Queen(pos,"BLACK"));
+						break;
+					case 4:
+						this.board[row][col] = new Square(pos, new King(pos,"BLACK"));
+						break;
 					}
-				}else if (row == 1 || row == 6) {
-					
-					board[row][col] = new Square(new Position(row, col ),
-							new Pawn(row, col, row == 6 ? WHITE : BLACK));
+				} else if (row == 1 || row == 6) {
+
+					this.board[row][col] = new Square(pos, new Pawn(pos, row == 6 ? "WHITE" : "BLACK"));
 
 				}
 				// Dejar las casillas vac�as en el resto
 				else {
-					board[row][col] = new Square(new Position(row, col), null);
+					this.board[row][col] = new Square(pos, null);
 				}
 			}
 		}
@@ -157,7 +142,8 @@ public class ChessBoard {
 		String[][] boardState = new String[8][8]; // Matriz para almacenar el estado del tablero
 		for (int row = 0; row < 8; row++) { // Iterar sobre las filas del tablero
 			for (int col = 0; col < 8; col++) { // Iterar sobre las columnas del tablero
-				IPiece piece = board[row][col].getPiece(); // Obtener la pieza en la casilla actual
+				
+				IPiece piece = this.board[row][col].getPiece(); // Obtener la pieza en la casilla actual
 				if (piece != null) { // Si hay una pieza en la casilla
 					// Representar la pieza en la casilla como una cadena (por ejemplo, "WP" para un
 					// pe�n blanco)
@@ -168,6 +154,10 @@ public class ChessBoard {
 			}
 		}
 		return boardState; // Devolver la matriz que representa el estado del tablero
+	}
+	
+	public void erracePiece(int row,int colunm) {
+		board[row][colunm].resetSquare();
 	}
 
 	public void displayBoard() {
