@@ -49,28 +49,55 @@ public class Vista extends JFrame {
     private void initializeUI() {
         setTitle("Ajedrez");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(8, 8));
-
+        setLayout(new BorderLayout());
+    
+        JPanel mainPanel = new JPanel(new GridLayout(8, 8));
         chessBoard = new JPanel[BOARD_SIZE][BOARD_SIZE];
         selectedLabel = null;
-
+    
+        // Panel izquierdo
+        JPanel leftPanel = new JPanel(new GridLayout(8, 1)); // GridLayout con 8 filas y 1 columna
+        leftPanel.setBackground(Color.LIGHT_GRAY);
+        leftPanel.setPreferredSize(new Dimension(50, 720));
+    
+        // Panel inferior
+        JPanel bottomPanel = new JPanel(new GridLayout(1, 8)); // GridLayout con 1 fila y 8 columnas
+        bottomPanel.setBackground(Color.LIGHT_GRAY);
+        bottomPanel.setPreferredSize(new Dimension(720, 50));
+    
+        // Agregar números del 1 al 8 al panel izquierdo
+        for (int i = 8; i >= 1; i--) {
+            JLabel label = new JLabel(Integer.toString(i));
+            label.setHorizontalAlignment(JLabel.CENTER);
+            leftPanel.add(label);
+        }
+    
+        // Agregar letras del abecedario al panel inferior
+        for (char c = 'a'; c <= 'h'; c++) {
+            JLabel label = new JLabel(Character.toString(c));
+            label.setHorizontalAlignment(JLabel.CENTER);
+            bottomPanel.add(label);
+        }
+    
+        // Configuración del tablero principal
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
                 chessBoard[row][col] = new JPanel(new BorderLayout());
                 chessBoard[row][col].setBackground((row + col) % 2 == 0 ? Color.WHITE : Color.BLACK);
-
-                // Agregar un MouseListener para manejar los clics del ratón
                 chessBoard[row][col].addMouseListener(new ChessCellMouseListener(row, col));
-
-                // Configurar el diseño para que las imágenes ocupen todo el espacio de la celda
-                add(chessBoard[row][col]);
+                mainPanel.add(chessBoard[row][col]);
             }
         }
-
-        setSize(1280, 720);
+    
+        add(mainPanel, BorderLayout.CENTER);
+        add(leftPanel, BorderLayout.WEST);
+        add(bottomPanel, BorderLayout.SOUTH);
+    
+        setSize(770, 770);
         setVisible(true);
     }
-
+    
+    
     private void initializeChessBoard() {
         // Llenar el tablero con las piezas iniciales e imágenes
         for (int row = 0; row < BOARD_SIZE; row++) {
