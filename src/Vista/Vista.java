@@ -67,8 +67,7 @@ public class Vista extends JFrame {
             }
         }
 
-        pack();
-        setLocationRelativeTo(null);
+        setSize(1280, 720);
         setVisible(true);
     }
 
@@ -136,11 +135,15 @@ public class Vista extends JFrame {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            // Puedes agregar aquí cualquier lógica adicional según la celda seleccionada
+            // Aquí puedes agregar la lógica para manejar los clics en el tablero
+            System.out.println("Clic en la casilla: (" + row + ", " + col + ")");
         }
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Vista());
+        // Crear una instancia de la clase Vista
+        SwingUtilities.invokeLater(() -> {
+            Vista miVista = new Vista();
+        });
     }
 }
