@@ -1,6 +1,8 @@
 package Controlador;
 
 import Vista.Vista;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import javax.swing.SwingUtilities;
@@ -67,19 +69,28 @@ public class controlador {
 
 	
 	
-	public  void playGame() {
-		Scanner sc = new Scanner(System.in);
-		boolean continuar = true;
+	public void playGame() {
+        Scanner sc = new Scanner(System.in);
+        boolean continuar = true;
         while (continuar) {
-            turn();
-            System.out.println("¿Desea continuar jugando? (S/N)");
-            String respuesta = sc.nextLine().trim().toUpperCase();
-            if (!respuesta.equals("S")) {
-                continuar = false;
+            try {
+                turn();
+                System.out.println("¿Desea continuar jugando? (S/N)");
+                String respuesta = sc.nextLine().trim().toUpperCase();
+                if (!respuesta.equals("S")) {
+                    continuar = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Entrada inválida. Por favor, ingrese solo letras.");
+                sc.nextLine(); // Limpiar el buffer de entrada
+            } catch (Exception e) {
+                System.out.println("Error: Ha ocurrido un error inesperado.");
+                e.printStackTrace();
             }
         }
         sc.close();
     }
+	
 	public void turn() {
 		Scanner sc = new Scanner(System.in);
 		boolean option = false;
