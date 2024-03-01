@@ -105,11 +105,29 @@ public class ChessBoard {
 	public Square[][] getSquares() {
 		return board;
 	}
+	
+	private boolean isSquareFilled(int row,int col) {
+		Square sq = this.board[row][col];
+		System.out.println(sq.getPiece().getClass().getName());;
+		if(sq.getPiece()==null) {
+			return false;
+		}else {
+			return true;
+		}
+	}
 
-	public boolean movePiece(int row, int column, int Mrow, int Mcolumn) {
-
+	public boolean movePiece(int row, int column, int Mrow, int Mcolumn,Player player) {
+		if(!isSquareFilled(row, column)) {
+			System.out.println("No puedes mover una ficha que no existe,tienes que mover las fichas que siguen en juego y no un cuadrado vacio.");
+			System.out.println("Vuelve a intentarlo");
+			return false;
+		}
 		IPiece pieza = getPieceAt(row, column);
-
+		if (player.getColor().compareToIgnoreCase(pieza.color)!=0) {
+			System.out.println("Esa ficha no es de tu color,mueve una pieza de tu color");
+			return false;
+		}
+		
 		Boolean isMove = pieza.move(new Position(Mrow, Mcolumn));
 
 		return isMove;
