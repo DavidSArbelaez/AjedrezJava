@@ -32,18 +32,18 @@ public class Vista extends JFrame {
 
     private void initializePieceImages() {
         pieceImages = new HashMap<>();
-        pieceImages.put("white_pawn", new ImageIcon("src/media/peon_b.png"));
-        pieceImages.put("black_pawn", new ImageIcon("src/media/peon_n.png"));
-        pieceImages.put("black_king", new ImageIcon("src/media/rey_n.png"));
-        pieceImages.put("white_king", new ImageIcon("src/media/rey_b.png"));
-        pieceImages.put("black_queen", new ImageIcon("src/media/reina_n.png"));
-        pieceImages.put("white_queen", new ImageIcon("src/media/reina_b.png"));
-        pieceImages.put("black_bishop", new ImageIcon("src/media/arfil_n.png"));
-        pieceImages.put("white_bishop", new ImageIcon("src/media/arfil_b.png"));
-        pieceImages.put("black_knight", new ImageIcon("src/media/caballo_n.png"));
-        pieceImages.put("white_knight", new ImageIcon("src/media/horse_b.png"));
-        pieceImages.put("black_rook", new ImageIcon("src/media/torre_n.png"));
-        pieceImages.put("white_rook", new ImageIcon("src/media/torre_b.png"));
+        pieceImages.put("white_pawn", new ImageIcon("AjedrezJava-Juan/src/media/peon_b.png"));
+        pieceImages.put("black_pawn", new ImageIcon("AjedrezJava-Juan/src/media/peon_n.png"));
+        pieceImages.put("black_king", new ImageIcon("AjedrezJava-Juan/src/media/rey_n.png"));
+        pieceImages.put("white_king", new ImageIcon("AjedrezJava-Juan/src/media/rey_b.png"));
+        pieceImages.put("black_queen", new ImageIcon("AjedrezJava-Juan/src/media/reina_n.png"));
+        pieceImages.put("white_queen", new ImageIcon("AjedrezJava-Juan/src/media/reina_b.png"));
+        pieceImages.put("black_bishop", new ImageIcon("AjedrezJava-Juan/src/media/arfil_n.png"));
+        pieceImages.put("white_bishop", new ImageIcon("AjedrezJava-Juan/src/media/arfil_b.png"));
+        pieceImages.put("black_knight", new ImageIcon("AjedrezJava-Juan/src/media/caballo_n.png"));
+        pieceImages.put("white_knight", new ImageIcon("AjedrezJava-Juan/src/media/horse_b.png"));
+        pieceImages.put("black_rook", new ImageIcon("AjedrezJava-Juan/src/media/torre_n.png"));
+        pieceImages.put("white_rook", new ImageIcon("AjedrezJava-Juan/src/media/torre_b.png"));
     }
 
     private void initializeUI() {
@@ -93,7 +93,7 @@ public class Vista extends JFrame {
         add(leftPanel, BorderLayout.WEST);
         add(bottomPanel, BorderLayout.SOUTH);
     
-        setSize(770, 770);
+        setSize(1280, 720);
         setVisible(true);
     }
     
@@ -148,29 +148,5 @@ public class Vista extends JFrame {
                 panel.setBackground((row + col) % 2 == 0 ? Color.WHITE : Color.BLACK);
             }
         }
-    }
-
-    // Clase interna para manejar los eventos del ratón en las celdas del tablero
-    private class ChessCellMouseListener extends MouseAdapter {
-        private int row;
-        private int col;
-
-        public ChessCellMouseListener(int row, int col) {
-            this.row = row;
-            this.col = col;
-        }
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            // Aquí puedes agregar la lógica para manejar los clics en el tablero
-            System.out.println("Clic en la casilla: (" + row + ", " + col + ")");
-        }
-    }
-
-    public static void main(String[] args) {
-        // Crear una instancia de la clase Vista
-        SwingUtilities.invokeLater(() -> {
-            Vista miVista = new Vista();
-        });
     }
 }
