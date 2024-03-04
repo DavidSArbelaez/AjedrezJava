@@ -96,7 +96,7 @@ public class controlador {
                     }
                     try {
                         // Esperar un tiempo antes de volver a verificar
-                        Thread.sleep(100); // Esperar 100 milisegundos
+                        Thread.sleep(1);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
