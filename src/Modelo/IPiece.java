@@ -23,8 +23,6 @@ public abstract class IPiece {
 
 	public Boolean move(Position pos) {
 		ArrayList<Square> validMoves = getValidMoves();
-		System.out.println(validMoves.size());
-		System.out.println(this.getClass().getSimpleName());
 		if (validMove(pos, validMoves)) {
 			ChessBoard board = ChessBoard.getInstance();
 			board.resetSquare(pos);

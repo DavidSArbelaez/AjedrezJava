@@ -78,7 +78,7 @@ public class controlador {
                 System.out.println("¿Desea continuar jugando? (S/N)");
                 String respuesta = sc.nextLine().trim().toUpperCase();
                 if (!respuesta.equals("S")) {
-                    continuar = false;
+                    continuar = true;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Error: Entrada inválida. Por favor, ingrese solo letras.");

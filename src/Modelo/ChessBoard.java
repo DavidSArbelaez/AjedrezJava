@@ -85,7 +85,7 @@ public class ChessBoard {
 				}
 				// Dejar las casillas vac�as en el resto
 				else {
-					this.board[row][col] = new Square(pos, null);
+					this.board[row][col] = new Square(pos);
 				}
 			}
 		}
