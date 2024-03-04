@@ -165,7 +165,7 @@ public class ChessBoard {
 				if (piece != null) { // Si hay una pieza en la casilla
 					// Representar la pieza en la casilla como una cadena (por ejemplo, "WP" para un
 					// pe�n blanco)
-					boardState[row][col] = piece.color.charAt(0) + piece.getClass().getSimpleName().substring(0, 1);
+					boardState[row][col] = piece.color+"_" + piece.getClass().getSimpleName().toLowerCase();
 				} else { // Si no hay una pieza en la casilla
 					boardState[row][col] = ""; // Representar la casilla como una cadena vac�a
 				}
