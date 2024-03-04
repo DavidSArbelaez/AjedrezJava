@@ -11,8 +11,7 @@ public class Socket {
             
         } catch (IOException e) {
             e.printStackTrace();
-            // Aquí puedes manejar la excepción según tus necesidades
-            return null;
+            throw new RuntimeException("Error al serializar el arreglo de cadenas.", e);
         }
     }
 }
