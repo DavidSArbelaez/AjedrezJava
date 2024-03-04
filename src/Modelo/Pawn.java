@@ -37,13 +37,15 @@ public class Pawn extends IPiece{
         if (board.isSquareValid(forwardOneRow, currentColumn)) {
             if (board.getPieceAt(forwardOneRow, currentColumn) == null) {
                 // Si la casilla está vacía, se agrega a la lista de movimientos válidos
-            	System.out.println("Hola");
                 validMoves.add(new Square(new Position(forwardOneRow, currentColumn), null));
                 // Si es el primer movimiento, verifica si puede avanzar dos casillas
-                if (currentRow == (this.color.compareToIgnoreCase("White") == 0 ? 2 : 7)) {
+                
+                if (currentRow == (this.color.compareToIgnoreCase("WHITE") == 0 ? 6 : 1)) {
                     int forwardTwoRows = currentRow + (2 * forwardDirection);
+                    System.out.println(forwardTwoRows+"  s");
                     if (board.isSquareValid(forwardTwoRows, currentColumn) && board.getPieceAt(forwardTwoRows, currentColumn) == null) {
-                        validMoves.add(new Square(new Position(forwardTwoRows, currentColumn), null));
+                        System.out.println("doble");
+                        validMoves.add(new Square(new Position(forwardTwoRows, currentColumn)));
                     }
                 }
             }
