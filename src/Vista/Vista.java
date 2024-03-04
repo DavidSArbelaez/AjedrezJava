@@ -9,6 +9,7 @@ import java.util.Map;
 public class Vista extends JFrame {
     private JPanel[][] chessBoard;
     private JLabel selectedLabel;
+    private int fromRow,fromCol,toRow,toCol;
     private Map<String, ImageIcon> pieceImages;
 
     private String[][] initialBoard = {
@@ -32,18 +33,19 @@ public class Vista extends JFrame {
 
     private void initializePieceImages() {
         pieceImages = new HashMap<>();
-        pieceImages.put("white_pawn", new ImageIcon("AjedrezJava-Juan/src/media/peon_b.png"));
-        pieceImages.put("black_pawn", new ImageIcon("AjedrezJava-Juan/src/media/peon_n.png"));
-        pieceImages.put("black_king", new ImageIcon("AjedrezJava-Juan/src/media/rey_n.png"));
-        pieceImages.put("white_king", new ImageIcon("AjedrezJava-Juan/src/media/rey_b.png"));
-        pieceImages.put("black_queen", new ImageIcon("AjedrezJava-Juan/src/media/reina_n.png"));
-        pieceImages.put("white_queen", new ImageIcon("AjedrezJava-Juan/src/media/reina_b.png"));
-        pieceImages.put("black_bishop", new ImageIcon("AjedrezJava-Juan/src/media/arfil_n.png"));
-        pieceImages.put("white_bishop", new ImageIcon("AjedrezJava-Juan/src/media/arfil_b.png"));
-        pieceImages.put("black_knight", new ImageIcon("AjedrezJava-Juan/src/media/caballo_n.png"));
-        pieceImages.put("white_knight", new ImageIcon("AjedrezJava-Juan/src/media/horse_b.png"));
-        pieceImages.put("black_rook", new ImageIcon("AjedrezJava-Juan/src/media/torre_n.png"));
-        pieceImages.put("white_rook", new ImageIcon("AjedrezJava-Juan/src/media/torre_b.png"));
+        String ruta ="C:\\Users\\Administrador\\Downloads\\AjedrezJava-Entrega\\src\\media\\";
+        pieceImages.put("white_pawn", new ImageIcon(ruta+"peon_b.png"));
+        pieceImages.put("black_pawn", new ImageIcon(ruta+"peon_n.png"));
+        pieceImages.put("black_king", new ImageIcon(ruta+"rey_n.png"));
+        pieceImages.put("white_king", new ImageIcon(ruta+"rey_b.png"));
+        pieceImages.put("black_queen", new ImageIcon(ruta+"reina_n.png"));
+        pieceImages.put("white_queen", new ImageIcon(ruta+"reina_b.png"));
+        pieceImages.put("black_bishop", new ImageIcon(ruta+"arfil_n.png"));
+        pieceImages.put("white_bishop", new ImageIcon(ruta+"arfil_b.png"));
+        pieceImages.put("black_knight", new ImageIcon(ruta+"caballo_n.png"));
+        pieceImages.put("white_knight", new ImageIcon(ruta+"horse_b.png"));
+        pieceImages.put("black_rook", new ImageIcon(ruta+"torre_n.png"));
+        pieceImages.put("white_rook", new ImageIcon(ruta+"torre_b.png"));
     }
 
     private void initializeUI() {
