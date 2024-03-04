@@ -2,6 +2,7 @@ package Controlador;
 
 import Vista.Vista;
 
+import java.awt.event.MouseAdapter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -13,9 +14,9 @@ import Modelo.Modelo;
  *
  * @author Labing
  */
-public class controlador {
+public class controlador extends MouseAdapter {
 	Modelo modelo = new Modelo();
-	//Vista vista = new Vista();
+	Vista vista = new Vista();
 	String tablero[][];
 	int turnNum;
 
@@ -26,9 +27,9 @@ public class controlador {
 	public void startGame() {
 		this.modelo.startGame();
 		this.tablero = modelo.getBoard();
-		/*SwingUtilities.invokeLater(() -> {
+		SwingUtilities.invokeLater(() -> {
 			vista.setVisible(true);
-		});*/
+		});
 
 		displayBoard(tablero);
 
@@ -68,6 +69,9 @@ public class controlador {
 	}
 
 	
+	/*public void playGame(MouseEvent e) {
+		
+	}*/
 	
 	public void playGame() {
         Scanner sc = new Scanner(System.in);
@@ -95,7 +99,7 @@ public class controlador {
 		Scanner sc = new Scanner(System.in);
 		boolean option = false;
 
-		do {
+		/*do {
 			// Se obtiene los datos de la vista
 			// los cuales son:
 			// - Columna actual
@@ -122,8 +126,20 @@ public class controlador {
 				
 				System.out.println("Movimiento no válido. Inténtelo de nuevo.");
 			}
-		} while (!option);
-
+		} while (!option);*/
+		
+		
+		Boolean isValidTurn = this.modelo.Turn(turnNum, fromCol, fromRow, toCol, toRow);
+		if (isValidTurn) {
+			System.out.println("Movimiento válido. La pieza se ha movido.");
+			this.turnNum = this.turnNum + 1;
+			modelo.erracePiece(fromRow,fromCol);
+			option=true;
+		}else{
+			
+			System.out.println("Movimiento no válido. Inténtelo de nuevo.");
+		}
+		
 		tablero = modelo.getBoard();
 		this.displayBoard(tablero);
 		//vista.updateBoard(tablero);
