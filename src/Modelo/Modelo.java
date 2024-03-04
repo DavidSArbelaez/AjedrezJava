@@ -29,7 +29,7 @@ public class Modelo {
 			return false;
 		}
 
-		boolean moveResult = board.movePiece(row, col, newRow, newCol);
+		boolean moveResult = board.movePiece(row, col, newRow, newCol,player);
 		return moveResult;
 	}
 	
