@@ -18,14 +18,13 @@ public class Pawn extends IPiece{
         //	Se verifica el color para saber la direcci�n en que va
         // -1 para negras y 1 para blancas
         int forwardDirection = (this.color.compareToIgnoreCase("White")==0) ? -1 : 1;
-        System.err.println(" "+forwardDirection);
         System.out.println(this.toString());
         validMoves.addAll(forwardMove(validMoves,board, forwardDirection, currentRow, currentColumn));
-        System.out.println(validMoves.size());
+        
         validMoves.addAll(addFirstMove(validMoves,board, forwardDirection, currentRow, currentColumn));
-        System.out.println(validMoves.size());
+        
         validMoves.addAll(addDiagonalCaptures(validMoves, board, forwardDirection, currentRow, currentColumn));
-        System.out.println(validMoves.size());
+        
         
         return validMoves;
     }
@@ -39,12 +38,9 @@ public class Pawn extends IPiece{
                 // Si la casilla está vacía, se agrega a la lista de movimientos válidos
                 validMoves.add(new Square(new Position(forwardOneRow, currentColumn), null));
                 // Si es el primer movimiento, verifica si puede avanzar dos casillas
-                
                 if (currentRow == (this.color.compareToIgnoreCase("WHITE") == 0 ? 6 : 1)) {
                     int forwardTwoRows = currentRow + (2 * forwardDirection);
-                    System.out.println(forwardTwoRows+"  s");
                     if (board.isSquareValid(forwardTwoRows, currentColumn) && board.getPieceAt(forwardTwoRows, currentColumn) == null) {
-                        System.out.println("doble");
                         validMoves.add(new Square(new Position(forwardTwoRows, currentColumn)));
                     }
                 }
