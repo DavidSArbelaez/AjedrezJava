@@ -1,8 +1,6 @@
 package Controlador;
 
 import Vista.Vista;
-
-import java.awt.event.MouseAdapter;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,7 +12,7 @@ import Modelo.Modelo;
  *
  * @author Labing
  */
-public class controlador extends MouseAdapter {
+public class controlador {
 	Modelo modelo = new Modelo();
 	Vista vista = new Vista();
 	String tablero[][];
@@ -32,6 +30,7 @@ public class controlador extends MouseAdapter {
 		});
 
 		displayBoard(tablero);
+		iniciarEscucha();
 
 	}
 
@@ -68,17 +67,51 @@ public class controlador extends MouseAdapter {
 	    System.out.println();
 	}
 
-	
-	/*public void playGame(MouseEvent e) {
-		
-	}*/
+	public void iniciarEscucha() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    // Escuchar la variable booleana de la vista
+                    if (vista.getMouseToMove()) {
+                        // Llamar a la función cuando la variable cambie
+                        int [] rowM = vista.getRowM();
+                        int [] colM = vista.getColM();
+                        int fromRow,fromCol,toRow,toCol;
+                        if(tablero[rowM[0]][colM[0]].compareToIgnoreCase("")==0) {
+                        	toRow=rowM[0];
+                        	toCol=colM[0];
+                        	fromRow=rowM[1];
+                        	fromCol=colM[1];
+                        }else {
+                        	toRow=rowM[1];
+                        	toCol=colM[1];
+                        	fromRow=rowM[0];
+                        	fromCol=colM[0];
+                        }
+                        turn(fromCol, fromRow, toCol, toRow);
+                        vista.setContCords(0);
+                        vista.resetRowM();
+                        vista.resetColM();
+                    }
+                    try {
+                        // Esperar un tiempo antes de volver a verificar
+                        Thread.sleep(100); // Esperar 100 milisegundos
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        thread.start();
+    }
 	
 	public void playGame() {
         Scanner sc = new Scanner(System.in);
         boolean continuar = true;
         while (continuar) {
             try {
-                turn();
+                //turn();
                 System.out.println("¿Desea continuar jugando? (S/N)");
                 String respuesta = sc.nextLine().trim().toUpperCase();
                 if (!respuesta.equals("S")) {
@@ -95,11 +128,11 @@ public class controlador extends MouseAdapter {
         sc.close();
     }
 	
-	public void turn() {
-		Scanner sc = new Scanner(System.in);
+	public void turn(int fromCol, int fromRow, int toCol, int toRow) {
+		/*Scanner sc = new Scanner(System.in);
 		boolean option = false;
 
-		/*do {
+		do {
 			// Se obtiene los datos de la vista
 			// los cuales son:
 			// - Columna actual
@@ -129,20 +162,22 @@ public class controlador extends MouseAdapter {
 		} while (!option);*/
 		
 		
-		Boolean isValidTurn = this.modelo.Turn(turnNum, fromCol, fromRow, toCol, toRow);
-		if (isValidTurn) {
-			System.out.println("Movimiento válido. La pieza se ha movido.");
-			this.turnNum = this.turnNum + 1;
-			modelo.erracePiece(fromRow,fromCol);
-			option=true;
-		}else{
-			
-			System.out.println("Movimiento no válido. Inténtelo de nuevo.");
+		if(toCol!=fromCol || toRow!=fromRow) {
+			Boolean isValidTurn = this.modelo.Turn(turnNum, fromCol, fromRow, toCol, toRow);
+			if (isValidTurn) {
+				System.out.println("Movimiento válido. La pieza se ha movido.");
+				this.turnNum = this.turnNum + 1;
+				modelo.erracePiece(fromRow,fromCol);
+				//option=true;
+			}else{
+				
+				System.out.println("Movimiento no válido. Inténtelo de nuevo.");
+			}
 		}
 		
 		tablero = modelo.getBoard();
 		this.displayBoard(tablero);
-		//vista.updateBoard(tablero);
+		vista.updateChessBoard(this.tablero);
 
 	}
 }
