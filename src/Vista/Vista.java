@@ -148,10 +148,10 @@ public class Vista extends JFrame {
                 if (piece.compareToIgnoreCase("") != 0) {
                     int index = piece.indexOf("_");
                     // Configurar la imagen de la pieza
-                    System.out.println(piece);
+                    //System.out.println(piece);
                     String pieceKey = piece.startsWith("W") ? "white_" + piece.substring(index + 1)
                             : "black_" + piece.substring(index + 1);
-                    System.out.println(pieceKey);
+                    //System.out.println(pieceKey);
                     ImageIcon pieceIcon = pieceImages.get(pieceKey);
                     if (pieceIcon != null) {
                         JLabel pieceLabel = new JLabel(pieceIcon);
