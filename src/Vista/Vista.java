@@ -1,15 +1,19 @@
 package Vista;
+import Controlador.controlador;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Vista extends JFrame {
     private JPanel[][] chessBoard;
+    private controlador controlador;
+
     private JLabel selectedLabel;
-    private int fromRow,fromCol,toRow,toCol;
+    
     private Map<String, ImageIcon> pieceImages;
 
     private String[][] initialBoard = {
@@ -22,13 +26,14 @@ public class Vista extends JFrame {
             {"white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn", "white_pawn"},
             {"white_rook", "white_knight", "white_bishop", "white_queen", "white_king", "white_bishop", "white_knight", "white_rook"}
     };
-
+    
     private static final int BOARD_SIZE = 8;
 
     public Vista() {
         initializePieceImages();
         initializeUI();
         initializeChessBoard();
+        this.contCords=0;
     }
 
     private void initializePieceImages() {
@@ -121,8 +126,43 @@ public class Vista extends JFrame {
         }
     }
 
+    public void updateChessBoard(String[][] boardState) {
+        // Verificar que el estado del tablero tenga el tamaño esperado
+        if (boardState.length != BOARD_SIZE || boardState[0].length != BOARD_SIZE) {
+            throw new IllegalArgumentException("El tamaño del estado del tablero debe ser " + BOARD_SIZE + "x" + BOARD_SIZE + ".");
+        }
+
+        for (int row = 0; row < BOARD_SIZE; row++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
+                String piece = boardState[row][col];
+                JPanel panel = chessBoard[row][col];
+                panel.removeAll();  // Limpiar el contenido
+
+                // Verificar si hay una pieza en la celda
+                if (piece.compareToIgnoreCase("")!=0) {
+                	int index =piece.indexOf("_");
+                    // Configurar la imagen de la pieza
+                	//System.out.println(piece);
+                    String pieceKey = piece.startsWith("w") ? "white_" + piece.substring(index+1) : "black_" + piece.substring(index+1);
+                    //System.out.println(pieceKey);
+                    //String pieceKey = piece == 'w' ? "white_" + Character.toLowerCase(boardState.charAt(index - 1)) : "black_" + boardState.charAt(index - 1);
+                    ImageIcon pieceIcon = pieceImages.get(pieceKey);
+                    if (pieceIcon != null) {
+                    	System.out.println("hola2");
+                        JLabel pieceLabel = new JLabel(pieceIcon);
+                        panel.add(pieceLabel, BorderLayout.CENTER);
+                    }
+                }
+
+                // Volver a pintar el fondo
+                panel.setBackground((row + col) % 2 == 0 ? Color.WHITE : Color.BLACK);
+            }
+        }
+    }
+
+    
     // Función para actualizar la vista con la información de las piezas
-    public void updateChessBoard(String boardState) {
+    /*public void updateChessBoard(String boardState) {
         // Verificar que el estado del tablero tenga la longitud esperada
         if (boardState.length() != 64) {
             throw new IllegalArgumentException("La longitud del estado del tablero debe ser 64.");
@@ -150,5 +190,53 @@ public class Vista extends JFrame {
                 panel.setBackground((row + col) % 2 == 0 ? Color.WHITE : Color.BLACK);
             }
         }
-    }
+    }*/
+
+    private int contCords;
+    private int [] rowM = new int[2];
+    private int [] colM = new int[2];
+	public boolean getMouseToMove() {
+		for (int row = 0; row < BOARD_SIZE; row++) {
+            for (int col = 0; col < BOARD_SIZE; col++) {
+            	ChessCellMouseListener mouse = (ChessCellMouseListener) chessBoard[row][col].getMouseListeners()[0];
+            	if(mouse.isMover()) {
+            		rowM[contCords]=mouse.getRow();
+            		colM[contCords]=mouse.getCol();
+            		contCords++;
+            		mouse.resetMover();
+            	}else if(contCords==2) {
+            		return true;
+            	}
+            }   
+		}
+		
+		return false;
+	}
+
+	public int getContCords() {
+		return contCords;
+	}
+
+	public void setContCords(int contCords) {
+		this.contCords = contCords;
+	}
+
+	public int[] getRowM() {
+		return rowM;
+	}
+
+	public void resetRowM() {
+		this.rowM = new int[2];
+	}
+
+	public int[] getColM() {
+		return colM;
+	}
+
+	public void resetColM() {
+		this.colM = new int[2];
+	}
+    
+	
+    
 }
