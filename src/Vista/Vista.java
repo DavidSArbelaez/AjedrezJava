@@ -140,6 +140,7 @@ public class Vista extends JFrame {
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
                 String piece = boardState[row][col];
+                piece.toLowerCase();
                 JPanel panel = chessBoard[row][col];
                 panel.removeAll(); // Limpiar el contenido
 
@@ -147,13 +148,10 @@ public class Vista extends JFrame {
                 if (piece.compareToIgnoreCase("") != 0) {
                     int index = piece.indexOf("_");
                     // Configurar la imagen de la pieza
-                    // System.out.println(piece);
-                    String pieceKey = piece.startsWith("w") ? "white_" + piece.substring(index + 1)
+                    System.out.println(piece);
+                    String pieceKey = piece.startsWith("W") ? "white_" + piece.substring(index + 1)
                             : "black_" + piece.substring(index + 1);
-                    // System.out.println(pieceKey);
-                    // String pieceKey = piece == 'w' ? "white_" +
-                    // Character.toLowerCase(boardState.charAt(index - 1)) : "black_" +
-                    // boardState.charAt(index - 1);
+                    System.out.println(pieceKey);
                     ImageIcon pieceIcon = pieceImages.get(pieceKey);
                     if (pieceIcon != null) {
                         JLabel pieceLabel = new JLabel(pieceIcon);
@@ -202,6 +200,7 @@ public class Vista extends JFrame {
     public int[] getRowM() {
         return rowM;
     }
+
 
     public void resetRowM() {
         this.rowM = new int[2];
