@@ -129,38 +129,6 @@ public class controlador {
     }
 	
 	public void turn(int fromCol, int fromRow, int toCol, int toRow) {
-		/*Scanner sc = new Scanner(System.in);
-		boolean option = false;
-
-		do {
-			// Se obtiene los datos de la vista
-			// los cuales son:
-			// - Columna actual
-			// - fila actual
-			// - Columna nueva
-			// - fila nueva
-			System.out.println("Ingrese el numero de la fila de la pieza a mover:");
-			int fromRow = sc.nextInt() - 1;
-			System.out.println("Ingrese el numero de la columna de la pieza a mover:");
-			int fromCol = sc.nextInt() - 1;
-			System.out.println("Ingrese el numero de la fila a mover la pieza:");
-			int toRow = sc.nextInt() -1;
-			System.out.println("Ingrese el numero de la columna a mover la pieza:");
-			int toCol = sc.nextInt() - 1;
-
-			Boolean isValidTurn = this.modelo.Turn(turnNum, fromCol, fromRow, toCol, toRow);
-			
-			if (isValidTurn) {
-				System.out.println("Movimiento válido. La pieza se ha movido.");
-				this.turnNum = this.turnNum + 1;
-				modelo.erracePiece(fromRow,fromCol);
-				option=true;
-			}else{
-				
-				System.out.println("Movimiento no válido. Inténtelo de nuevo.");
-			}
-		} while (!option);*/
-		
 		
 		if(toCol!=fromCol || toRow!=fromRow) {
 			Boolean isValidTurn = this.modelo.Turn(turnNum, fromCol, fromRow, toCol, toRow);
@@ -168,7 +136,6 @@ public class controlador {
 				System.out.println("Movimiento válido. La pieza se ha movido.");
 				this.turnNum = this.turnNum + 1;
 				modelo.erracePiece(fromRow,fromCol);
-				//option=true;
 			}else{
 				
 				System.out.println("Movimiento no válido. Inténtelo de nuevo.");
