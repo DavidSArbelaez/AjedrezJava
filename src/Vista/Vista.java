@@ -43,7 +43,7 @@ public class Vista extends JFrame {
 
     private void initializePieceImages() {
         pieceImages = new HashMap<>();
-        String ruta = "C:\\Users\\Labing\\Downloads\\AjedrezJava-Entrega\\src\\media\\";
+        String ruta = "C:\\Users\\david\\Documents\\Nueva carpeta\\AjedrezJava\\src\\media\\";
         pieceImages.put("white_pawn", new ImageIcon(ruta + "peon_b.png"));
         pieceImages.put("black_pawn", new ImageIcon(ruta + "peon_n.png"));
         pieceImages.put("black_king", new ImageIcon(ruta + "rey_n.png"));

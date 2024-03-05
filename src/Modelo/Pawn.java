@@ -18,7 +18,6 @@ public class Pawn extends IPiece{
         //	Se verifica el color para saber la direcci�n en que va
         // -1 para negras y 1 para blancas
         int forwardDirection = (this.color.compareToIgnoreCase("White")==0) ? -1 : 1;
-        System.out.println(this.toString());
         validMoves.addAll(forwardMove(validMoves,board, forwardDirection, currentRow, currentColumn));
         
         validMoves.addAll(addFirstMove(validMoves,board, forwardDirection, currentRow, currentColumn));

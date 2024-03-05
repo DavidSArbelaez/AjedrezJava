@@ -108,7 +108,6 @@ public class ChessBoard {
 	
 	private boolean isSquareFilled(int row,int col) {
 		Square sq = this.board[row][col];
-		System.out.println(sq.getPiece().getClass().getName());;
 		if(sq.getPiece()==null) {
 			return false;
 		}else {

@@ -15,16 +15,18 @@ public class Modelo {
 	public Boolean Turn(int numTurn, int col, int row, int newCol, int newRow) {
 		ChessBoard board = ChessBoard.getInstance();
 		GameRules rules = new GameRules();
-
+		Player at;
 		Player player;
 		if (numTurn % 2 == 0) {
 			player = new Player("White");
+			at = new Player("Black");
 		} else {
 			player = new Player("Black");
+			at = new Player("White");
 		}
-
 		
-		if(rules.isKingInCheck(player.getColor())){
+		
+		if(rules.isKingInCheck(player.getColor(),at.getColor())){
 			System.out.println("Estas en jaque,no puedes realizar ese movimiento");
 			return false;
 		}

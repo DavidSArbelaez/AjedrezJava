@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class GameRules {
 
 	// M�todo para verificar si el rey est� en jaque
-	public boolean isKingInCheck(String color) {
+	public boolean isKingInCheck(String color,String atColor) {
 		Position kingPosition = getKingPosition(color);
 		if (kingPosition == null) {
 			return false;
 		}
-		return isSquareUnderAttack(kingPosition, color);
+		return isSquareUnderAttack(kingPosition, atColor);
 	}
 
 	// M�todo para obtener la posici�n del rey
@@ -19,7 +19,7 @@ public class GameRules {
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
 				IPiece piece = board.getPieceAt(row, col);
-				if (piece instanceof King && piece.color.equals(color)) {
+				if (piece instanceof King && piece.color.compareToIgnoreCase(color)==0 && piece!=null) {
 					return piece.currentPosition;
 				}
 			}
@@ -27,16 +27,17 @@ public class GameRules {
 		return null;
 	}
 
-	// M�todo para verificar si una casilla est� bajo ataque
 	private boolean isSquareUnderAttack(Position position, String attackerColor) {
-		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
+		ChessBoard board = ChessBoard.getInstance();
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
 				IPiece piece = board.getPieceAt(row, col);
-				if (piece != null && !piece.color.equals(attackerColor)) {
+				if (piece != null && piece.color.compareToIgnoreCase(attackerColor)==0) {
 					ArrayList<Square> validMoves = piece.getValidMoves();
+					System.out.println("Movimientos:"+validMoves.size()+" "+piece.getClass().getName()+piece.color);
 					for (Square square : validMoves) {
-						if (square.getPosition().equals(position)) {
+						if (square.getPosition().getColumn()==position.getColumn() && square.getPosition().getRow()==position.getRow()) {
+							System.out.println("JAQUEEEEE HPTAAA");
 							return true;
 						}
 					}
@@ -45,22 +46,23 @@ public class GameRules {
 		}
 		return false;
 	}
+	
 
 	// M�todo para verificar si el rey est� en jaque mate
-	public boolean isKingInCheckmate(String color) {
+	public boolean isKingInCheckmate(String color,String colorat) {
 		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
-		if (!isKingInCheck(color)) {
+		if (!isKingInCheck(color,colorat)) {
 			return false;
 		}
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
 				IPiece piece = board.getPieceAt(row, col);
-				if (piece != null && piece.color.equals(color)) {
+				if (piece != null && piece.color.compareToIgnoreCase(colorat)==0) {
 					ArrayList<Square> validMoves = piece.getValidMoves();
 					for (Square square : validMoves) {
 						Position originalPosition = piece.currentPosition;
 						piece.setPosition(square.getPosition());
-						if (!isKingInCheck(color)) {
+						if (!isKingInCheck(color,colorat)) {
 							piece.setPosition(originalPosition);
 							return false;
 						}
@@ -84,7 +86,7 @@ public class GameRules {
 			for (int col = 0; col < 8; col++) {
 				IPiece piece = board.getPieceAt(row, col);
 				if (piece != null && !(piece instanceof King)) {
-					if (piece.color.equals("White")) {
+					if (piece.color.compareToIgnoreCase("White")==0) {
 						numNonKingPiecesWhite++;
 					} else {
 						numNonKingPiecesBlack++;
@@ -106,7 +108,7 @@ public class GameRules {
 
 	public boolean isGameOver() {
 		// Verificar si alguno de los jugadores está en jaque mate
-		if (isKingInCheckmate("White") || isKingInCheckmate("Black")) {
+		if (isKingInCheckmate("White","Black") || isKingInCheckmate("Black","White")) {
 			return true;
 		}
 
