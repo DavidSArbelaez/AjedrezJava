@@ -1,3 +1,4 @@
+package SocketModelo;
 import java.io.*;
 
 public class Socket {
