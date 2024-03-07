@@ -32,15 +32,20 @@ public class Modelo {
 
 		// Se obtiene el numero del evento y si es 4 no se hace nada
 		int event = checkTurn(players[0],players[1]);
+		boolean moveResult
 		switch (event) {
 			case 0://El rey esta en jaque
-				
+				moveResult = board.movePieceCheck(row,col, newRow,newCol,player[1]);
+				if (moveResult){
+					
+				}
 				break;
 		
 			default:
+				moveResult = board.movePiece(row, col, newRow, newCol,players[0]);
 				break;
 		}
-		boolean moveResult = board.movePiece(row, col, newRow, newCol,players[0]);
+		
 		return moveResult;
 	}
 
