@@ -11,6 +11,28 @@ public class ChessBoard {
 		this.isGameOver = false;
 	}
 
+
+	private Square[][] copyBoard(){ {
+		Square[][] copy = new Square[this.board.length][this.board[0].length.length];
+
+        // Copiar los elementos del array original al array copia
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Square sq = this.board[i][j];
+				Square copySq; 
+				if(sq.getPiece()==null){
+					copySq = = new Square(sq.getPosition());
+				}else{
+					copySq = = new Square(sq.getPosition(),(IPiece) sq.getPiece().clone());
+				}
+				copy[i][j] = copySq;
+            }
+        }
+
+        // Devolver la copia del array
+        return copy;
+	}
+
 	public void initBoard() {
 		// Inicializar el tablero con piezas
 		for (int row = 0; row < 8; row++) {
@@ -116,6 +138,15 @@ public class ChessBoard {
 	}
 
 	public boolean movePiece(int row, int column, int Mrow, int Mcolumn,Player player) {
+		boolean isMove=false;
+		if(check(row,column)){
+			IPiece pieza = getPieceAt(row, column);
+			isMove = pieza.moveCheck(new Position(Mrow, Mcolumn));
+		}
+		return isMove;
+	}
+
+	private boolean check(int row, int column){
 		if(!isSquareFilled(row, column)) {
 			System.out.println("No puedes mover una ficha que no existe,tienes que mover las fichas que siguen en juego y no un cuadrado vacio.");
 			System.out.println("Vuelve a intentarlo");
@@ -126,10 +157,20 @@ public class ChessBoard {
 			System.out.println("Esa ficha no es de tu color,mueve una pieza de tu color");
 			return false;
 		}
-		
-		Boolean isMove = pieza.move(new Position(Mrow, Mcolumn));
+		return true;
+	}
 
-		return isMove;
+
+	/*
+	 * Se verifica que la pieza se haya movido a un movimiento valido para despues verificar si ese movimiento cancela el jaque
+	 */
+	public boolean movePieceCheck(int row, int column, int Mrow, int Mcolumn,Player player){
+		if(check(row,column)){
+			IPiece pieza = getPieceAt(row, column);
+			return pieza.moveCheck(new Position(Mrow, Mcolumn));
+		}
+
+		return false;
 	}
 
 	public IPiece getPieceAt(int row, int column) {
