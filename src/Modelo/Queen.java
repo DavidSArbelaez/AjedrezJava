@@ -43,4 +43,14 @@ public class Queen extends IPiece {
 
         return validMoves;
     }
+
+    @Override
+	public IPiece clone() {
+		String c = this.color;
+		Position clonedPosition = new Position(currentPosition.getRow(), currentPosition.getColumn());
+		Queen clonedPiece = new Queen(clonedPosition, c);
+		// No es necesario clonar el ArrayList de validMoves porque no se modifica en
+		// esta clase
+		return clonedPiece;
+	}
 }
