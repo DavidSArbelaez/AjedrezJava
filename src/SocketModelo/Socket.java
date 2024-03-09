@@ -1,8 +1,8 @@
 package SocketModelo;
 
-public class Socket {
+public class Sockets {
 
-    // Función para serializar el array de strings
+    // Función pa ra serializar el array de strings
     public static String serializeStringArray(String[][] array) {
         StringBuilder serialized = new StringBuilder();
         for (int i = 0; i < array.length; i++) {
