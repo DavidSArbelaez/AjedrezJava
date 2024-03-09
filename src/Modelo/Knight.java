@@ -34,4 +34,14 @@ public class Knight extends IPiece {
 
         return validMoves; // Devuelve la lista de movimientos v�lidos del caballo.
     }
+
+    @Override
+	public IPiece clone() {
+		String c = this.color;
+		Position clonedPosition = new Position(currentPosition.getRow(), currentPosition.getColumn());
+		Knight clonedPiece = new Knight (clonedPosition, c);
+		// No es necesario clonar el ArrayList de validMoves porque no se modifica en
+		// esta clase
+		return clonedPiece;
+	}
 }
