@@ -32,17 +32,26 @@ public class Modelo {
 
 		// Se obtiene el numero del evento y si es 4 no se hace nada
 		int event = checkTurn(players[0],players[1]);
-		boolean moveResult
+		boolean moveResult;
 		switch (event) {
 			case 0://El rey esta en jaque
-				moveResult = board.movePieceCheck(row,col, newRow,newCol,player[1]);
-				if (moveResult){
-					
+
+				moveResult = board.movePiece(row,col, newRow,newCol,players[0]);
+				System.out.println(moveResult);
+				if (!moveResult || checkTurn(players[0],players[1])!=4){
+					IPiece pi = board.getPieceAt(newRow, newCol);
+					pi.devolverMov(row, col);
+					erracePiece(newRow, newCol);
+					String mensaje = "El movimiento realizado no quita el jaque por lo que no es valido";
+					System.out.println(mensaje);
+					moveResult=false;
 				}
+				
 				break;
 		
 			default:
 				moveResult = board.movePiece(row, col, newRow, newCol,players[0]);
+				System.out.println("Hola todo well");
 				break;
 		}
 		
@@ -62,7 +71,7 @@ public class Modelo {
 		ChessBoard board = ChessBoard.getInstance();
 		GameRules rules = new GameRules();
 		if(rules.isKingInCheck(actuPlayer.getColor(),atPlayer.getColor())){
-			System.out.println("Estas en jaque,no puedes realizar ese movimiento");
+			//System.out.println("Estas en jaque,no puedes realizar ese movimiento");
 			return 0;
 		}if(isGameOver()){
 			return 1;
