@@ -1,121 +1,107 @@
 package Modelo;
 
-import java.util.ArrayList;
+public class Modelo {
 
-public class GameRules {
-
-	// M�todo para verificar si el rey est� en jaque
-	public boolean isKingInCheck(String color,String atColor) {
-		Position kingPosition = getKingPosition(color);
-		if (kingPosition == null) {
-			return false;
-		}
-		return isSquareUnderAttack(kingPosition, atColor);
-	}
-
-	// M�todo para obtener la posici�n del rey
-	private Position getKingPosition(String color) {
-		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
-		for (int row = 0; row < 8; row++) {
-			for (int col = 0; col < 8; col++) {
-				IPiece piece = board.getPieceAt(row, col);
-				if (piece instanceof King && piece.color.compareToIgnoreCase(color)==0 && piece!=null) {
-					return piece.currentPosition;
-				}
-			}
-		}
-		return null;
-	}
-
-	private boolean isSquareUnderAttack(Position position, String attackerColor) {
+	/*
+	 * Función que inicializa el tablero del juego
+	 */
+	public void startGame() {
 		ChessBoard board = ChessBoard.getInstance();
-		for (int row = 0; row < 8; row++) {
-			for (int col = 0; col < 8; col++) {
-				IPiece piece = board.getPieceAt(row, col);
-				if (piece != null && piece.color.compareToIgnoreCase(attackerColor)==0) {
-					ArrayList<Square> validMoves = piece.getValidMoves();
-					System.out.println("Movimientos:"+validMoves.size()+" "+piece.getClass().getName()+piece.color);
-					for (Square square : validMoves) {
-						if (square.getPosition().getColumn()==position.getColumn() && square.getPosition().getRow()==position.getRow()) {
-							System.out.println("JAQUEEEEE HPTAAA");
-							return true;
-						}
-					}
+		board.initBoard();
+	}
+
+	/*
+	 * Función que obtiene el tablero para darselo al controlador
+	 */
+	public String[][] getBoard() {
+		ChessBoard board = ChessBoard.getInstance();
+		return board.getBoardState();
+	}
+
+	/*
+	 * Metodo que gestiona los turnos
+	 */
+	public boolean Turn(int numTurn, int col, int row, int newCol, int newRow) {
+		//Se crean las instancias necesarias para gestionar los turnos
+		ChessBoard board = ChessBoard.getInstance();
+
+		/*
+		 * En la pocisión 0 se tiene al juagador actual y en el 1 al atacante
+		 */
+		Player [] players= playerTurn(numTurn); 
+
+		// Se obtiene el numero del evento y si es 4 no se hace nada
+		int event = checkTurn(players[0],players[1]);
+		boolean moveResult;
+		switch (event) {
+			case 0://El rey esta en jaque
+
+				moveResult = board.movePiece(row,col, newRow,newCol,players[0]);
+				System.out.println(moveResult);
+				if (!moveResult || checkTurn(players[0],players[1])!=4){
+					IPiece pi = board.getPieceAt(newRow, newCol);
+					pi.devolverMov(row, col);
+					erracePiece(newRow, newCol);
+					String mensaje = "El movimiento realizado no quita el jaque por lo que no es valido";
+					System.out.println(mensaje);
+					moveResult=false;
 				}
-			}
+				
+				break;
+		
+			default:
+				moveResult = board.movePiece(row, col, newRow, newCol,players[0]);
+				System.out.println("Hola todo well");
+				break;
 		}
-		return false;
+		
+		return moveResult;
+	}
+
+	/*
+	 * Este metodo verifica que se cumplan las reglas y los movimientos sean validos
+	 * al igual que revisa hackes,movimientos especiales y cierre del juego
+	 * @return 0 si esta en jaque
+	 * @return 1 si esta en jaque mate
+	 * @return 2 si es una promoción
+	 * @return 3 si se puede matar al paso
+	 * @return 4 si no hay nada y se juega normal
+	 */
+	private int checkTurn(Player actuPlayer,Player atPlayer){
+		ChessBoard board = ChessBoard.getInstance();
+		GameRules rules = new GameRules();
+		if(rules.isKingInCheck(actuPlayer.getColor(),atPlayer.getColor())){
+			//System.out.println("Estas en jaque,no puedes realizar ese movimiento");
+			return 0;
+		}if(isGameOver()){
+			return 1;
+		}
+		/*if(){
+			return 2;
+		}*/
+		/*if(){
+			return 3;
+		}*/
+		
+		return 4;
 	}
 	
-
-	// M�todo para verificar si el rey est� en jaque mate
-	public boolean isKingInCheckmate(String color,String colorat) {
-		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
-		if (!isKingInCheck(color,colorat)) {
-			return false;
-		}
-		for (int row = 0; row < 8; row++) {
-			for (int col = 0; col < 8; col++) {
-				IPiece piece = board.getPieceAt(row, col);
-				if (piece != null && piece.color.compareToIgnoreCase(colorat)==0) {
-					ArrayList<Square> validMoves = piece.getValidMoves();
-					for (Square square : validMoves) {
-						Position originalPosition = piece.currentPosition;
-						piece.setPosition(square.getPosition());
-						if (!isKingInCheck(color,colorat)) {
-							piece.setPosition(originalPosition);
-							return false;
-						}
-						piece.setPosition(originalPosition);
-					}
-				}
-			}
-		}
-		return true;
+	private Player [] playerTurn(int numTurn){
+		Player[] players= new Player[2];
+		
+		//Se verifica quien esta jugando y quien es el oponente
+		players[0] = new Player(numTurn % 2 == 0 ? "White" : "Black"); //actuPlayer
+		players[1] = new Player(numTurn % 2 == 0 ? "Black" : "White");//atPlayer
+		return players;
 	}
 
-	// Método para verificar si hay material insuficiente en el tablero
-	public boolean insufficientMaterial() {
-		ChessBoard board = ChessBoard.getInstance(); // Obtiene la instancia del tablero de ajedrez.
-		// Contadores para piezas que no sean reyes
-		int numNonKingPiecesWhite = 0;
-		int numNonKingPiecesBlack = 0;
-
-		// Iterar sobre todas las casillas del tablero
-		for (int row = 0; row < 8; row++) {
-			for (int col = 0; col < 8; col++) {
-				IPiece piece = board.getPieceAt(row, col);
-				if (piece != null && !(piece instanceof King)) {
-					if (piece.color.compareToIgnoreCase("White")==0) {
-						numNonKingPiecesWhite++;
-					} else {
-						numNonKingPiecesBlack++;
-					}
-				}
-			}
-		}
-
-		// Si solo quedan reyes o un rey y una pieza no rey para ambos lados, es
-		// material insuficiente
-		if ((numNonKingPiecesWhite == 0 && numNonKingPiecesBlack == 0) ||
-				(numNonKingPiecesWhite == 1 && numNonKingPiecesBlack == 0) ||
-				(numNonKingPiecesWhite == 0 && numNonKingPiecesBlack == 1)) {
-			return true;
-		}
-
-		return false;
+	public void erracePiece(int row,int col) {
+		ChessBoard board = ChessBoard.getInstance();
+		board.erracePiece(row, col);
 	}
 
-	public boolean isGameOver() {
-		// Verificar si alguno de los jugadores está en jaque mate
-		if (isKingInCheckmate("White","Black") || isKingInCheckmate("Black","White")) {
-			return true;
-		}
-
-		// Verificar si no hay suficientes piezas para dar jaque mate
-		if (insufficientMaterial()) {
-			return true;
-		}
-		return false;
+	private boolean isGameOver(){
+		GameRules rules = new GameRules();
+		return rules.isGameOver();
 	}
 }
