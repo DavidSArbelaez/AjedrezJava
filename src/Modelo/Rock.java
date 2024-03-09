@@ -39,4 +39,14 @@ public class Rock extends IPiece {
 
         return validMoves; // Devuelve la lista de movimientos v�lidos de la torre.
     }
+
+    @Override
+	public IPiece clone() {
+		String c = this.color;
+		Position clonedPosition = new Position(currentPosition.getRow(), currentPosition.getColumn());
+		Rock clonedPiece = new Rock(clonedPosition, c);
+		// No es necesario clonar el ArrayList de validMoves porque no se modifica en
+		// esta clase
+		return clonedPiece;
+	}
 }
