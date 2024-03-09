@@ -12,18 +12,19 @@ public class ChessBoard {
 	}
 
 
-	private Square[][] copyBoard(){ {
-		Square[][] copy = new Square[this.board.length][this.board[0].length.length];
+	private Square[][] copyBoard(){
+		Square[][] copy = new Square[this.board.length][this.board[0].length];
 
         // Copiar los elementos del array original al array copia
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Square sq = this.board[i][j];
 				Square copySq; 
+				Position copyPosition= new Position(sq.getPosition().getRow(), sq.getPosition().getColumn());
 				if(sq.getPiece()==null){
-					copySq = = new Square(sq.getPosition());
+					copySq = new Square(copyPosition);
 				}else{
-					copySq = = new Square(sq.getPosition(),(IPiece) sq.getPiece().clone());
+					copySq = new Square(copyPosition, sq.getPiece().clone());
 				}
 				copy[i][j] = copySq;
             }
@@ -139,14 +140,14 @@ public class ChessBoard {
 
 	public boolean movePiece(int row, int column, int Mrow, int Mcolumn,Player player) {
 		boolean isMove=false;
-		if(check(row,column)){
+		if(check(row,column,player)){
 			IPiece pieza = getPieceAt(row, column);
-			isMove = pieza.moveCheck(new Position(Mrow, Mcolumn));
+			isMove = pieza.move(new Position(Mrow, Mcolumn));
 		}
 		return isMove;
 	}
 
-	private boolean check(int row, int column){
+	private boolean check(int row, int column,Player player){
 		if(!isSquareFilled(row, column)) {
 			System.out.println("No puedes mover una ficha que no existe,tienes que mover las fichas que siguen en juego y no un cuadrado vacio.");
 			System.out.println("Vuelve a intentarlo");
@@ -161,17 +162,20 @@ public class ChessBoard {
 	}
 
 
+
+
 	/*
 	 * Se verifica que la pieza se haya movido a un movimiento valido para despues verificar si ese movimiento cancela el jaque
-	 */
+	 * Se guarda la pocision antes de mover 
+	 *
 	public boolean movePieceCheck(int row, int column, int Mrow, int Mcolumn,Player player){
-		if(check(row,column)){
+		if(check(row,column,player)){
 			IPiece pieza = getPieceAt(row, column);
 			return pieza.moveCheck(new Position(Mrow, Mcolumn));
 		}
 
 		return false;
-	}
+	}*/
 
 	public IPiece getPieceAt(int row, int column) {
 		if (!isSquareValid(row, column)) {
