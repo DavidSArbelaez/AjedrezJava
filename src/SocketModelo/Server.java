@@ -7,37 +7,54 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-    private static final int PUERTO = 40000;
+    private int port = 40000;
+    private ServerSocket serverSocket;
+    private BufferedReader in;
+    private PrintWriter out;
 
-    public static void main(String[] args) {
+    public Server(int PORT){
+        this.port = PORT;
         try {
-            // Crear el socket del servidor en el puerto 12345
-            ServerSocket serverSocket = new ServerSocket(40000);
+            serverSocket = new ServerSocket(this.port);
             System.out.println("Servidor iniciado. Esperando conexiones...");
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+    }
 
-            // Esperar a que un cliente se conecte
+    public boolean isServerAccept(){
+        try {
             Socket clientSocket = serverSocket.accept();
             System.out.println("Cliente conectado desde: " + clientSocket.getInetAddress().getHostAddress());
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
 
-            // Crear flujos de entrada y salida para la comunicación con el cliente
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+            return true;
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+            return false;
+        }
+    }
 
-            // Leer y enviar mensajes de forma intercalada con el cliente
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String inputLine, outputLine;
-            while ((inputLine = in.readLine()) != null) {
-                System.out.println("Cliente: " + inputLine);
-                if (inputLine.equals("Bye"))
-                    break;
-                outputLine = reader.readLine();
-                out.println(outputLine);
-            }
+    public void sendDataToServer(String  message){
+        out.println(message);
+    }
 
+    public String receiveDataServer(){
+        try {
             // Cerrar conexiones
+            System.out.println("Cliente: " + in.readLine());
+            return in.readLine();
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+            return "";
+        }
+    }
+
+    public void end(){
+        try {
             in.close();
             out.close();
-            clientSocket.close();
             serverSocket.close();
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
