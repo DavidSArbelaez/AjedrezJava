@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /*
 /*Usar pojo y dto para comunicar las clases
 */
-public abstract class IPiece implements Cloneable{
+public abstract class IPiece implements Cloneable {
 	protected Position currentPosition;
 	protected String color;
 
@@ -33,9 +33,9 @@ public abstract class IPiece implements Cloneable{
 		}
 	}
 
-	public Boolean moveCheck(Position pos){
+	public Boolean moveCheck(Position pos) {
 		ArrayList<Square> validMoves = getValidMoves();
-		return validMove(pso,validMoves)?true:false;
+		return validMove(pos, validMoves) ? true : false;
 	}
 
 	/*
@@ -52,16 +52,12 @@ public abstract class IPiece implements Cloneable{
 
 		return false;
 	}
-	
-	@Override
-    public Object clone() throws CloneNotSupportedException {
-        IPiece clonedPiece = (IPiece) super.clone();
-        // Realiza una copia profunda de los campos necesarios
-        clonedPiece.currentPosition = new Position(currentPosition.getRow(), currentPosition.getColumn());
-        clonedPiece.color = new String(color); // Si color es mutable, necesitarás una copia profunda también
-        // No es necesario clonar el ArrayList de validMoves porque no se modifica en esta clase
-        return clonedPiece;
-    }
-	
 
+	public abstract IPiece clone();
+
+	public void devolverMov(int Row, int Col) {
+		this.currentPosition = new Position(Row, Col);
+		ChessBoard board = ChessBoard.getInstance();
+		board.getSquares()[this.currentPosition.getRow()][this.currentPosition.getColumn()].setPiece(this);
+	}
 }
