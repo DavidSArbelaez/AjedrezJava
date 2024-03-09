@@ -3,7 +3,7 @@ package SocketModelo;
 public class Sockets {
 
     // Función pa ra serializar el array de strings
-    public static String serializeStringArray(String[][] array) {
+    public String serializeStringArray(String[][] array) {
         StringBuilder serialized = new StringBuilder();
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array[i].length; j++) {
@@ -20,7 +20,7 @@ public class Sockets {
     }
 
     // Función para deserializar y convertir la cadena al array original
-    public static String[][] deserializeStringArray(String serialized) {
+    public String[][] deserializeStringArray(String serialized) {
         String[] rows = serialized.split(";");
         String[][] result = new String[8][8];
         for (int i = 0; i < rows.length; i++) {
