@@ -49,4 +49,13 @@ public class Bishop extends IPiece {
 
 		return validMoves; // Devuelve la lista de movimientos v�lidos del alfil.
 	}
+	@Override
+	public IPiece clone() {
+		String c = this.color;
+		Position clonedPosition = new Position(currentPosition.getRow(), currentPosition.getColumn());
+		Bishop clonedPiece = new Bishop(clonedPosition, c);
+		// No es necesario clonar el ArrayList de validMoves porque no se modifica en
+		// esta clase
+		return clonedPiece;
+	}
 }
