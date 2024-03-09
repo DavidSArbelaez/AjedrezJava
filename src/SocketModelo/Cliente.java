@@ -3,8 +3,8 @@ import java.io.*;
 import java.net.*;
 
 public class Cliente {
-    private String server_IP="";
-    private int port=0;
+    private String server_IP;
+    private int port;
     private Socket socket ;
     private BufferedReader in;
     private PrintWriter out;
@@ -12,8 +12,9 @@ public class Cliente {
     public Cliente(String host_ip, int port){
         this.server_IP =  host_ip;
         this.port = port;
+        System.out.println(server_IP+" "+this.port);
         try {
-            this.socket = new Socket(host_ip, port);
+            this.socket = new Socket(host_ip, this.port);
             // Crear flujos de entrada y salida para la comunicación con el servidor
             this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             this.out = new PrintWriter(socket.getOutputStream(), true);
@@ -32,6 +33,21 @@ public class Cliente {
             socket.close();
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void sendDataToServer(String  message){
+        out.println(message);
+    }
+
+    public String receiveDataServer(){
+        try {
+            // Cerrar conexiones
+            System.out.println("Servidor: " + in.readLine());
+            return in.readLine();
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+            return "";
         }
     }
 
