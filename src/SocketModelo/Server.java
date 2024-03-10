@@ -1,4 +1,5 @@
 package SocketModelo;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,8 +12,9 @@ public class Server {
     private ServerSocket serverSocket;
     private BufferedReader in;
     private PrintWriter out;
+    private Socket clientSocket;
 
-    public Server(int PORT){
+    public Server(int PORT) {
         this.port = PORT;
         try {
             serverSocket = new ServerSocket(this.port);
@@ -22,9 +24,9 @@ public class Server {
         }
     }
 
-    public boolean isServerAccept(){
+    public boolean isServerAccept() {
         try {
-            Socket clientSocket = serverSocket.accept();
+            clientSocket = serverSocket.accept();
             System.out.println("Cliente conectado desde: " + clientSocket.getInetAddress().getHostAddress());
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -36,22 +38,31 @@ public class Server {
         }
     }
 
-    public void sendDataToServer(String  message){
-        out.println(message);
+    public void sendDataToServer(String message) {
+
+        try {
+            out = new PrintWriter(clientSocket.getOutputStream(), true);
+            out.println(message);
+            out.close();
+        } catch (IOException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
     }
 
-    public String receiveDataServer(){
+    public String receiveDataServer() {
         try {
-            // Cerrar conexiones
-            System.out.println("Cliente: " + in.readLine());
-            return in.readLine();
+            String message = in.readLine();
+            in.close();
+            // Imprimir el mensaje recibido (opcional)
+            System.out.println("Cliente: " + message);
+            return message;
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
             return "";
         }
     }
 
-    public void end(){
+    public void end() {
         try {
             in.close();
             out.close();
