@@ -16,6 +16,7 @@ public class Sockets {
                 serialized.append(";");
             }
         }
+        System.out.println(serialized.toString());
         return serialized.toString();
     }
 
@@ -26,7 +27,12 @@ public class Sockets {
         for (int i = 0; i < rows.length; i++) {
             String[] columns = rows[i].split(",");
             for (int j = 0; j < columns.length; j++) {
-                result[i][j] = columns[j];
+                if(columns[j].equals(null)){
+                    result[i][j] = "";
+                }else{
+                    result[i][j] = columns[j];
+                }
+                
             }
         }
         return result;
