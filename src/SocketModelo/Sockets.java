@@ -27,7 +27,7 @@ public class Sockets {
         for (int i = 0; i < rows.length; i++) {
             String[] columns = rows[i].split(",");
             for (int j = 0; j < columns.length; j++) {
-                if(columns[j].equals(null)){
+                if(columns[j].compareToIgnoreCase("null")==0){
                     result[i][j] = "";
                 }else{
                     result[i][j] = columns[j];
