@@ -43,7 +43,7 @@ public class Vista extends JFrame {
 
     private void initializePieceImages() {
         pieceImages = new HashMap<>();
-        String ruta = "C:\\Users\\david\\Documents\\Nueva carpeta\\AjedrezJava\\src\\media\\";
+        String ruta = "D:\\Descargas\\AjedrezJava-Entrega2\\AjedrezJava-Entrega2\\src\\media\\";
         pieceImages.put("white_pawn", new ImageIcon(ruta + "peon_b.png"));
         pieceImages.put("black_pawn", new ImageIcon(ruta + "peon_n.png"));
         pieceImages.put("black_king", new ImageIcon(ruta + "rey_n.png"));
@@ -140,12 +140,12 @@ public class Vista extends JFrame {
         for (int row = 0; row < BOARD_SIZE; row++) {
             for (int col = 0; col < BOARD_SIZE; col++) {
                 String piece = boardState[row][col];
-                piece.toLowerCase();
                 JPanel panel = chessBoard[row][col];
                 panel.removeAll(); // Limpiar el contenido
 
                 // Verificar si hay una pieza en la celda
-                if (piece.compareToIgnoreCase("") != 0) {
+                if (piece!=null && piece.compareToIgnoreCase("") != 0) {
+                    piece.toLowerCase();
                     int index = piece.indexOf("_");
                     // Configurar la imagen de la pieza
                     //System.out.println(piece);
