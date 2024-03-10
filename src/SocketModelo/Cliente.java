@@ -43,7 +43,7 @@ public class Cliente {
         try {
             this.out = new PrintWriter(socket.getOutputStream(), true);
             out.println(message);
-            CloseOut();
+            //CloseOut();
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
         }
@@ -56,7 +56,7 @@ public class Cliente {
             System.out.println("Entro a recibir el mensaje");
             String message = in.readLine();
             System.out.println("Servidor: " + message);
-            CloseIn();
+            //CloseIn();
             return message;
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
