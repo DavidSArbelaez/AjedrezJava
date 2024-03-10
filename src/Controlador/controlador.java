@@ -10,6 +10,7 @@ import SocketModelo.Sockets;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 /**
  *
  * @author Labing
@@ -20,60 +21,61 @@ public class controlador {
 	private VentanaMenu ventanaMenu;
 	String tablero[][];
 	int turnNum;
-	Cliente cl ;
+	Cliente cl;
 	Server sr;
-	boolean estadoCliente; //Si es true es un cliente sino es un servidor
+	boolean estadoCliente; // Si es true es un cliente sino es un servidor
 
 	public controlador() {
-        this.ventanaMenu = new VentanaMenu();
-        this.turnNum = 0;
+		this.ventanaMenu = new VentanaMenu();
+		this.turnNum = 0;
 
 		SwingUtilities.invokeLater(() -> {
 			ventanaMenu.setVisible(true);
+			vista.setVisible(false);
 		});
-        // Manejo de eventos para el botón 1
-        ventanaMenu.setBoton1Listener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                manejarBoton1();
-            }
-        });
+		// Manejo de eventos para el botón 1
+		ventanaMenu.setBoton1Listener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manejarBoton1();
+			}
+		});
 
-        // Manejo de eventos para el botón 2
-        ventanaMenu.setBoton2Listener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                manejarBoton2();
-            }
-        });
-    }
+		// Manejo de eventos para el botón 2
+		ventanaMenu.setBoton2Listener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				manejarBoton2();
+			}
+		});
+	}
 
-    // Método para manejar el clic del botón 1
-    private void manejarBoton1() {
-        //System.out.println("Botón 1 presionado");
-		estadoCliente=false;
+	// Método para manejar el clic del botón 1
+	private void manejarBoton1() {
+		// System.out.println("Botón 1 presionado");
+		estadoCliente = false;
 		sr = new Server(40000);
 		sr.isServerAccept();
 		SwingUtilities.invokeLater(() -> {
 			ventanaMenu.setVisible(false);
 			vista.setVisible(true);
-			
-		});
-        // Agrega aquí la lógica para iniciar el juego
-    }
 
-    // Método para manejar el clic del botón 2
-    private void manejarBoton2() {
-        System.out.println("Botón 2 presionado");
-        String direccionIP = abrirVentanaIngresoIP();
-        System.out.println("Dirección IP ingresada: " + direccionIP);
-		cl = new Cliente(direccionIP,40000);
-		this.estadoCliente=true;
+		});
+		// Agrega aquí la lógica para iniciar el juego
+	}
+
+	// Método para manejar el clic del botón 2
+	private void manejarBoton2() {
+		System.out.println("Botón 2 presionado");
+		String direccionIP = abrirVentanaIngresoIP();
+		System.out.println("Dirección IP ingresada: " + direccionIP);
+		cl = new Cliente(direccionIP, 40000);
+		this.estadoCliente = true;
 		SwingUtilities.invokeLater(() -> {
 			ventanaMenu.setVisible(false);
 			vista.setVisible(true);
 		});
-    }
+	}
 
 	private String abrirVentanaIngresoIP() {
 		JFrame frame = new JFrame("Ingresar dirección IP");
@@ -132,44 +134,54 @@ public class controlador {
 			@Override
 			public void run() {
 				while (true) {
-					// Escuchar la variable booleana de la vista
-					if ((!estadoCliente && turnNum%2==0)||(estadoCliente && turnNum%2==1)){
-						if(estadoCliente){
-							tablero = s.deserializeStringArray(cl.receiveDataServer());
-							displayBoard(tablero); 
-						}else{
-							tablero = s.deserializeStringArray(sr.receiveDataServer());
-							displayBoard(tablero);
-						}
-						if (vista.getMouseToMove()) {
-							
-							// Llamar a la función cuando la variable cambie
-							int[] rowM = vista.getRowM();
-							int[] colM = vista.getColM();
-							int fromRow, fromCol, toRow, toCol;
-							if (tablero[rowM[0]][colM[0]].compareToIgnoreCase("") == 0) {
-								toRow = rowM[0];
-								toCol = colM[0];
-								fromRow = rowM[1];
-								fromCol = colM[1];
+
+					if (turnNum == 0 && estadoCliente) {
+						
+						String mensaje=cl.receiveDataServer();
+						System.out.println("Soy un cliente"+mensaje);
+
+						tablero = s.deserializeStringArray(mensaje);
+						displayBoard(tablero);
+						turnNum=turnNum+1;
+					}
+					if (vista.getMouseToMove() && (!estadoCliente && turnNum % 2 == 0)
+							|| (estadoCliente && turnNum % 2 == 1)) {
+						if (turnNum != 0) {
+							if (estadoCliente) {
+								System.out.println(cl.receiveDataServer());
+								tablero = s.deserializeStringArray(cl.receiveDataServer());
+								displayBoard(tablero);
 							} else {
-								toRow = rowM[1];
-								toCol = colM[1];
-								fromRow = rowM[0];
-								fromCol = colM[0];
+								tablero = s.deserializeStringArray(sr.receiveDataServer());
+								displayBoard(tablero);
 							}
-							turn(fromCol, fromRow, toCol, toRow);
-							vista.setContCords(0);
-							vista.resetRowM();
-							vista.resetColM();
-							
-						}if(estadoCliente){
+						}
+						// Llamar a la función cuando la variable cambie
+						int[] rowM = vista.getRowM();
+						int[] colM = vista.getColM();
+						int fromRow, fromCol, toRow, toCol;
+						if (tablero[rowM[0]][colM[0]].compareToIgnoreCase("") == 0) {
+							toRow = rowM[0];
+							toCol = colM[0];
+							fromRow = rowM[1];
+							fromCol = colM[1];
+						} else {
+							toRow = rowM[1];
+							toCol = colM[1];
+							fromRow = rowM[0];
+							fromCol = colM[0];
+						}
+						turn(fromCol, fromRow, toCol, toRow);
+						vista.setContCords(0);
+						vista.resetRowM();
+						vista.resetColM();
+						if (estadoCliente) {
 							displayBoard(tablero);
 							cl.sendDataToServer(s.serializeStringArray(tablero));
 
 							turnNum = turnNum + 1;
-						}else{
-							displayBoard(tablero); 
+						} else {
+							displayBoard(tablero);
 							sr.sendDataToServer(s.serializeStringArray(tablero));
 							turnNum = turnNum + 1;
 						}
