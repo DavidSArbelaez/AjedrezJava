@@ -52,7 +52,7 @@ public class Server {
     public String receiveDataServer() {
         try {
             String message = in.readLine();
-            in.close();
+            //in.close();
             // Imprimir el mensaje recibido (opcional)
             System.out.println("Cliente: " + message);
             return message;
