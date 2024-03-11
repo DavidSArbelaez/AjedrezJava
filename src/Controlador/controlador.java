@@ -156,6 +156,7 @@ public class controlador {
 							int[] results = getCordsOponnent(modelo.getBoard());
 							turn(results[1], results[0], results[3], results[2]);
 							vista.updateChessBoard(getTablero());
+							
 							//cl.sendDataToServer(s.serializeStringArray(getTablero()));
 							
 						} else {
@@ -221,7 +222,12 @@ public class controlador {
 
 	public void setTablero(String[][] tableroN) {
 		this.tablero = tableroN;
+		System.out.println("Antes de check");
+		displayBoard(this.tablero);
 		checkBoard();
+		System.out.println("despues de check");
+		displayBoard(this.tablero);
+
 	}
 
 	private void checkBoard() {
@@ -236,17 +242,31 @@ public class controlador {
 	public int[] getCordsOponnent(String[][] tabMol) {
 		// int row,col,rowM,colM;
 		int[] results = new int[4];
+		int cont=0;
+		boolean firstIf=false;
 		for (int i = 0; i < tabMol.length; i++) {
 			for (int j = 0; j < tabMol[i].length; j++) {
-				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0 && tabMol[i][j] != null) {
+				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0 && tabMol[i][j] != null && !firstIf) {
 					results[0] = i;
 					results[1] = j;
+					cont=cont+1;
+					firstIf=true;
+					if(cont==2){
+						return results;
+					}
 				}
 				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0
 						&& this.tablero[i][j].compareToIgnoreCase("") != 0) {
 					results[2] = i;
 					results[3] = j;
+					cont=cont+1;
+
+					System.out.println(results[2]+" "+results[3]);
+					if(cont==2){
+						return results;
+					}
 				}
+
 			}
 		}
 		return results;
@@ -264,6 +284,8 @@ public class controlador {
 
 				System.out.println("Movimiento no válido. Inténtelo de nuevo.");
 			}
+		}else{
+			System.out.println("Debe ser una pocisión diferente");
 		}
 
 		tablero = modelo.getBoard();
