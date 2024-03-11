@@ -242,29 +242,20 @@ public class controlador {
 	public int[] getCordsOponnent(String[][] tabMol) {
 		// int row,col,rowM,colM;
 		int[] results = new int[4];
-		int cont=0;
 		boolean firstIf=false;
 		for (int i = 0; i < tabMol.length; i++) {
 			for (int j = 0; j < tabMol[i].length; j++) {
 				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0 && tabMol[i][j] != null && !firstIf) {
 					results[0] = i;
 					results[1] = j;
-					cont=cont+1;
 					firstIf=true;
-					if(cont==2){
-						return results;
-					}
 				}
 				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0
 						&& this.tablero[i][j].compareToIgnoreCase("") != 0) {
 					results[2] = i;
 					results[3] = j;
-					cont=cont+1;
 
 					System.out.println(results[2]+" "+results[3]);
-					if(cont==2){
-						return results;
-					}
 				}
 
 			}
