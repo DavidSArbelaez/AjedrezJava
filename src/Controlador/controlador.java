@@ -246,15 +246,15 @@ public class controlador {
 		for (int i = 0; i < tabMol.length; i++) {
 			for (int j = 0; j < tabMol[i].length; j++) {
 				System.out.println("Mensaje:"+ tabMol[i][j]);
-				System.out.println("Host:"+ tabMol[i][j]);
-				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0 && tabMol[i][j] != null && !firstIf) {
+				System.out.println("Host:"+ this.tablero[i][j]);
+				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0 && tabMol[i][j].compareToIgnoreCase("") == 0 && !firstIf) {
 					results[2] = i;
 					results[3] = j;
 					firstIf=true;
 					System.out.println(results[2]+" "+results[3]);
 				}
 				else if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0
-						&& this.tablero[i][j].compareToIgnoreCase("") != 0) {
+						&& tabMol[i][j].compareToIgnoreCase("") != 0) {
 					results[0] = i;
 					results[1] = j;
 
