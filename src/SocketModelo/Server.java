@@ -13,6 +13,7 @@ public class Server {
     private BufferedReader in;
     private PrintWriter out;
     private Socket clientSocket;
+    boolean MsgSend, MsgRec;
 
     public Server(int PORT) {
         this.port = PORT;
@@ -44,7 +45,6 @@ public class Server {
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             System.out.println("Envio de info");
             out.println(message);
-            out.close();
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
         }
@@ -53,14 +53,11 @@ public class Server {
     public String receiveDataServer() {
         try {
             if (clientSocket.isClosed()) {
-                // Volver a abrir el socket
                 clientSocket = serverSocket.accept();
                 System.out.println("Cliente conectado desde: " + clientSocket.getInetAddress().getHostAddress());
                 in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             }
             String message = in.readLine();
-            // Imprimir el mensaje recibido (opcional)
-            System.out.println("Servidor: " + message);
             return message;
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
