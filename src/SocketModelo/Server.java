@@ -52,24 +52,19 @@ public class Server {
 
     public String receiveDataServer() {
         try {
+            if (clientSocket.isClosed()) {
+                // Volver a abrir el socket
+                clientSocket = serverSocket.accept();
+                System.out.println("Cliente conectado desde: " + clientSocket.getInetAddress().getHostAddress());
+                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            }
             String message = in.readLine();
-            //in.close();
             // Imprimir el mensaje recibido (opcional)
-            System.out.println("Cliente: " + message);
+            System.out.println("Servidor: " + message);
             return message;
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
             return "";
-        }
-    }
-
-    public void end() {
-        try {
-            in.close();
-            out.close();
-            serverSocket.close();
-        } catch (IOException e) {
-            System.err.println("Error: " + e.getMessage());
         }
     }
 }
