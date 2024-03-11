@@ -17,46 +17,34 @@ public class Cliente {
         try {
             this.socket = new Socket(host_ip, this.port);
             // Crear flujos de entrada y salida para la comunicación con el servidor
-            
-        } catch (IOException e) {
-            System.err.println("Error: " + e.getMessage());
-
-        }
-
-    }
-
-    public void CloseIn() {
-        try {
-            // Cerrar conexiones
-            in.close();
+            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            this.out = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
         }
-    }
-
-    public void CloseOut() {
-        out.close();
     }
 
     public void sendDataToServer(String message) {
-
         try {
-            this.out = new PrintWriter(socket.getOutputStream(), true);
             out.println(message);
-            CloseOut();
-        } catch (IOException e) {
+            // No cierres el PrintWriter aquí
+        } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
         }
     }
 
     public String receiveDataServer() {
         try {
-            this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            // Cerrar conexiones
+            // Verificar si el socket está cerrado y, en caso afirmativo, volver a abrirlo
+            if (socket.isClosed()) {
+                this.socket = new Socket(server_IP, port);
+                this.in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                this.out = new PrintWriter(socket.getOutputStream(), true);
+            }
+            
             System.out.println("Entro a recibir el mensaje");
             String message = in.readLine();
             System.out.println("Servidor: " + message);
-            //CloseIn();
             return message;
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
@@ -64,31 +52,12 @@ public class Cliente {
         }
     }
 
-    public void a() {
+    public void close() {
         try {
-            // Conectar al servidor en el puerto 12345
-            Socket socket = new Socket("192.168.1.16", 40000);
-
-            // Crear flujos de entrada y salida para la comunicación con el servidor
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-
-            // Crear un lector de entrada del teclado
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-
-            // Leer y enviar mensajes de forma intercalada con el servidor
-            String inputLine, outputLine;
-            while ((inputLine = reader.readLine()) != null) {
-                out.println(inputLine);
-                System.out.println("Servidor: " + in.readLine());
-                if (inputLine.equals("Bye"))
-                    break;
-            }
-
             // Cerrar conexiones
-            in.close();
-            out.close();
-            socket.close();
+            if (in != null) in.close();
+            if (out != null) out.close();
+            if (socket != null) socket.close();
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
         }
