@@ -144,25 +144,27 @@ public class controlador {
 						turn(results[1], results[0], results[3], results[2]);
 
 						vista.updateChessBoard(getTablero());
-						cl.sendDataToServer(s.serializeStringArray(getTablero()));
+						//cl.sendDataToServer(s.serializeStringArray(getTablero()));
 					}
 					if (turnNum > 0 && ((estadoCliente && turnNum % 2 == 0)
 							|| (!estadoCliente && turnNum % 2 == 1))) {
 						if (estadoCliente) {
-							setTablero(s.deserializeStringArray(cl.receiveDataServer()));
-							displayBoard(getTablero());
+							String mensaje = cl.receiveDataServer();
+
+							setTablero(s.deserializeStringArray(mensaje));
+							//displayBoard(getTablero());
 							int[] results = getCordsOponnent(modelo.getBoard());
 							turn(results[1], results[0], results[3], results[2]);
 							vista.updateChessBoard(getTablero());
-							cl.sendDataToServer(s.serializeStringArray(getTablero()));
+							//cl.sendDataToServer(s.serializeStringArray(getTablero()));
 							
 						} else {
 							setTablero(s.deserializeStringArray(sr.receiveDataServer()));
-							displayBoard(getTablero());
+							//displayBoard(getTablero());
 							int[] results = getCordsOponnent(modelo.getBoard());
 							turn(results[1], results[0], results[3], results[2]);
 							vista.updateChessBoard(getTablero());
-							sr.sendDataToServer(s.serializeStringArray(getTablero()));
+							//sr.sendDataToServer(s.serializeStringArray(getTablero()));
 							
 						}
 					}
@@ -193,10 +195,10 @@ public class controlador {
 						vista.resetRowM();
 						vista.resetColM();
 						if (estadoCliente) {
-							displayBoard(getTablero());
+							//displayBoard(getTablero());
 							cl.sendDataToServer(s.serializeStringArray(getTablero()));
 						} else {
-							displayBoard(getTablero());
+							//displayBoard(getTablero());
 							sr.sendDataToServer(s.serializeStringArray(getTablero()));
 							
 						}
