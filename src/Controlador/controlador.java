@@ -24,6 +24,8 @@ public class controlador {
 	Cliente cl;
 	Server sr;
 	boolean estadoCliente; // Si es true es un cliente sino es un servidor
+	boolean clMsgSend, clMsgRec;
+	boolean srMsgSend, srMsgRec;
 
 	public controlador() {
 		this.ventanaMenu = new VentanaMenu();
@@ -52,7 +54,6 @@ public class controlador {
 
 	// Método para manejar el clic del botón 1
 	private void manejarBoton1() {
-		// System.out.println("Botón 1 presionado");
 		estadoCliente = false;
 		sr = new Server(40000);
 		sr.isServerAccept();
@@ -61,12 +62,10 @@ public class controlador {
 			vista.setVisible(true);
 
 		});
-		// Agrega aquí la lógica para iniciar el juego
 	}
 
 	// Método para manejar el clic del botón 2
 	private void manejarBoton2() {
-		System.out.println("Botón 2 presionado");
 		String direccionIP = abrirVentanaIngresoIP();
 		System.out.println("Dirección IP ingresada: " + direccionIP);
 		cl = new Cliente(direccionIP, 40000);
@@ -138,9 +137,7 @@ public class controlador {
 
 					//Cliente turno 1
 					if (turnNum == 0 && estadoCliente) {
-						System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 						String mensaje = cl.receiveDataServer();
-						System.out.println("Soy un cliente" + mensaje);
 
 						setTablero(s.deserializeStringArray(mensaje));
 						int[] results = getCordsOponnent(modelo.getBoard());
@@ -151,10 +148,8 @@ public class controlador {
 					}
 					if (turnNum > 0 && ((estadoCliente && turnNum % 2 == 0)
 							|| (!estadoCliente && turnNum % 2 == 1))) {
-						System.out.println("Holaaaaaaa funcionaa");
 						if (estadoCliente) {
 							setTablero(s.deserializeStringArray(cl.receiveDataServer()));
-							System.out.println("Cliente si es mayor a 1");
 							displayBoard(getTablero());
 							int[] results = getCordsOponnent(modelo.getBoard());
 							turn(results[1], results[0], results[3], results[2]);
@@ -162,9 +157,7 @@ public class controlador {
 							cl.sendDataToServer(s.serializeStringArray(getTablero()));
 							
 						} else {
-							// System.out.println(cl.receiveDataServer());
 							setTablero(s.deserializeStringArray(sr.receiveDataServer()));
-							System.out.println("Servidor si es mayor a 1");
 							displayBoard(getTablero());
 							int[] results = getCordsOponnent(modelo.getBoard());
 							turn(results[1], results[0], results[3], results[2]);
@@ -200,11 +193,9 @@ public class controlador {
 						vista.resetRowM();
 						vista.resetColM();
 						if (estadoCliente) {
-							System.out.println("Cliente antes de envio");
 							displayBoard(getTablero());
 							cl.sendDataToServer(s.serializeStringArray(getTablero()));
 						} else {
-							System.out.println("Servidor antes de envio");
 							displayBoard(getTablero());
 							sr.sendDataToServer(s.serializeStringArray(getTablero()));
 							
@@ -227,21 +218,14 @@ public class controlador {
 	}
 
 	public void setTablero(String[][] tableroN) {
-		//System.out.println("Set tabbleroN");
-		//displayBoard(tableroN);
-
-		//System.out.println("Set tabblero");
-		//displayBoard(this.tablero);
 		this.tablero = tableroN;
 		checkBoard();
-		//System.out.println("Nuevo tablero");
-		displayBoard(this.tablero);
 	}
 
 	private void checkBoard() {
-		for (int i = 0; i < tablero.length; i++) {
-			for (int j = 0; j < tablero[i].length; j++) {
-				tablero[i][j] = (tablero[i][j] == null) ? "" : tablero[i][j];
+		for (int i = 0; i < this.tablero.length; i++) {
+			for (int j = 0; j < this.tablero[i].length; j++) {
+				this.tablero[i][j] = (this.tablero[i][j] == null) ? "" : this.tablero[i][j];
 			}
 		}
 
@@ -258,14 +242,11 @@ public class controlador {
 				}
 				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0
 						&& this.tablero[i][j].compareToIgnoreCase("") != 0) {
-					System.out.println(tablero[i][j]);
 					results[2] = i;
 					results[3] = j;
 				}
 			}
 		}
-		System.out.println(results[0] + " " + results[1]);
-		System.out.println(results[2] + " " + results[3]);
 		return results;
 	}
 
