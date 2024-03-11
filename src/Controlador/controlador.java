@@ -135,8 +135,10 @@ public class controlador {
 			public void run() {
 				while (true) {
 
-					if (turnNum == 0 && estadoCliente) {
 
+					//Cliente turno 1
+					if (turnNum == 0 && estadoCliente) {
+						System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 						String mensaje = cl.receiveDataServer();
 						System.out.println("Soy un cliente" + mensaje);
 
@@ -147,9 +149,19 @@ public class controlador {
 						vista.updateChessBoard(getTablero());
 						cl.sendDataToServer(s.serializeStringArray(getTablero()));
 					}
-					if (turnNum > 1 && ((estadoCliente && turnNum % 2 == 0)
+					if (turnNum > 0 && ((estadoCliente && turnNum % 2 == 0)
 							|| (!estadoCliente && turnNum % 2 == 1))) {
+						System.out.println("Holaaaaaaa funcionaa");
 						if (estadoCliente) {
+							setTablero(s.deserializeStringArray(cl.receiveDataServer()));
+							System.out.println("Cliente si es mayor a 1");
+							displayBoard(getTablero());
+							int[] results = getCordsOponnent(modelo.getBoard());
+							turn(results[1], results[0], results[3], results[2]);
+							vista.updateChessBoard(getTablero());
+							cl.sendDataToServer(s.serializeStringArray(getTablero()));
+							
+						} else {
 							// System.out.println(cl.receiveDataServer());
 							setTablero(s.deserializeStringArray(sr.receiveDataServer()));
 							System.out.println("Servidor si es mayor a 1");
@@ -158,15 +170,7 @@ public class controlador {
 							turn(results[1], results[0], results[3], results[2]);
 							vista.updateChessBoard(getTablero());
 							sr.sendDataToServer(s.serializeStringArray(getTablero()));
-						} else {
 							
-							setTablero(s.deserializeStringArray(cl.receiveDataServer()));
-							System.out.println("Cliente si es mayor a 1");
-							displayBoard(getTablero());
-							int[] results = getCordsOponnent(modelo.getBoard());
-							turn(results[1], results[0], results[3], results[2]);
-							vista.updateChessBoard(getTablero());
-							cl.sendDataToServer(s.serializeStringArray(getTablero()));
 						}
 					}
 					if (vista.getMouseToMove() && ((!estadoCliente && turnNum % 2 == 0)
