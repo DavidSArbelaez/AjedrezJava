@@ -200,7 +200,6 @@ public class ChessBoard {
 	 * @return Una matriz de cadenas que representa el estado del tablero.
 	 */
 	public String[][] getBoardState() {
-		System.out.println("Ingreso a board state");
 		String[][] boardState = new String[8][8]; // Matriz para almacenar el estado del tablero
 		for (int row = 0; row < 8; row++) { // Iterar sobre las filas del tablero
 			for (int col = 0; col < 8; col++) { // Iterar sobre las columnas del tablero
@@ -220,18 +219,6 @@ public class ChessBoard {
 	
 	public void erracePiece(int row,int colunm) {
 		board[row][colunm].resetSquare();
-	}
-
-	public void displayBoard() {
-		String[][] boardState = getBoardState(); // Obtener el estado actual del tablero
-		// Imprimir el tablero fila por fila
-		for (int row = 0; row < 8; row++) {
-			for (int col = 0; col < 8; col++) {
-				// Imprimir la representaci�n de la pieza en la casilla actual
-				System.out.print(boardState[row][col] + " ");
-			}
-			System.out.println(); // Saltar a la siguiente l�nea para imprimir la siguiente fila
-		}
 	}
 
 }
