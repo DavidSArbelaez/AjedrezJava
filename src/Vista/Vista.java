@@ -59,7 +59,7 @@ public class Vista extends JFrame {
     }
 
     private void initializeUI() {
-        setTitle("Ajedrez");
+        setTitle("Chess Leyva");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
