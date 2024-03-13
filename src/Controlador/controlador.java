@@ -2,6 +2,7 @@ package Controlador;
 
 import Vista.VentanaMenu;
 import Vista.Vista;
+import Vista.VistaEmergente;
 import Modelo.Modelo;
 import SocketModelo.Cliente;
 import SocketModelo.Server;
@@ -24,6 +25,7 @@ public class controlador {
 	Cliente cl;
 	Server sr;
 	boolean estadoCliente; // Si es true es un cliente sino es un servidor
+	private boolean endGame=false;
 	boolean clMsgSend, clMsgRec;
 	boolean srMsgSend, srMsgRec;
 
@@ -132,7 +134,7 @@ public class controlador {
 		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				while (true) {
+				while (!endGame) {
 
 					// Cliente turno 1
 					if (turnNum == 0 && estadoCliente) {
@@ -210,6 +212,7 @@ public class controlador {
 						e.printStackTrace();
 					}
 				}
+				VistaEmergente.mostrarVentana("Fin del juego");
 			}
 		});
 		thread.start();
@@ -273,7 +276,9 @@ public class controlador {
 				this.turnNum = this.turnNum + 1;
 				modelo.erracePiece(fromRow, fromCol);
 			} else {
-
+				if(modelo.endGame){
+					this.endGame = true;
+				}
 				System.out.println("Movimiento no válido. Inténtelo de nuevo.");
 			}
 		} else {
