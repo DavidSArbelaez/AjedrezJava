@@ -1,7 +1,7 @@
 package Modelo;
 
 public class Modelo {
-
+	public boolean endGame=false;
 	/*
 	 * Función que inicializa el tablero del juego
 	 */
@@ -46,6 +46,12 @@ public class Modelo {
 					moveResult=false;
 				}
 				
+				break;
+
+			case 1:
+				moveResult =false;
+				endGame=true;
+				System.out.println("Fin del juego");
 				break;
 		
 			default:
