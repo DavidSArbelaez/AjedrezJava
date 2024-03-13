@@ -134,8 +134,7 @@ public class controlador {
 			public void run() {
 				while (true) {
 
-
-					//Cliente turno 1
+					// Cliente turno 1
 					if (turnNum == 0 && estadoCliente) {
 						String mensaje = cl.receiveDataServer();
 
@@ -144,7 +143,7 @@ public class controlador {
 						turn(results[1], results[0], results[3], results[2]);
 
 						vista.updateChessBoard(getTablero());
-						//cl.sendDataToServer(s.serializeStringArray(getTablero()));
+						// cl.sendDataToServer(s.serializeStringArray(getTablero()));
 					}
 					if (turnNum > 0 && ((estadoCliente && turnNum % 2 == 0)
 							|| (!estadoCliente && turnNum % 2 == 1))) {
@@ -152,28 +151,28 @@ public class controlador {
 							String mensaje = cl.receiveDataServer();
 
 							setTablero(s.deserializeStringArray(mensaje));
-							//displayBoard(getTablero());
+							// displayBoard(getTablero());
 							int[] results = getCordsOponnent(modelo.getBoard());
 							turn(results[1], results[0], results[3], results[2]);
 							vista.updateChessBoard(getTablero());
-							
-							//cl.sendDataToServer(s.serializeStringArray(getTablero()));
-							
+
+							// cl.sendDataToServer(s.serializeStringArray(getTablero()));
+
 						} else {
 							setTablero(s.deserializeStringArray(sr.receiveDataServer()));
-							//displayBoard(getTablero());
+							// displayBoard(getTablero());
 							int[] results = getCordsOponnent(modelo.getBoard());
 							turn(results[1], results[0], results[3], results[2]);
 							vista.updateChessBoard(getTablero());
-							//sr.sendDataToServer(s.serializeStringArray(getTablero()));
-							
+							// sr.sendDataToServer(s.serializeStringArray(getTablero()));
+
 						}
 					}
 					if (vista.getMouseToMove() && ((!estadoCliente && turnNum % 2 == 0)
 							|| (estadoCliente && turnNum % 2 == 1))) {
 
-						if (!estadoCliente && turnNum%2==0) {
-							
+						if (!estadoCliente && turnNum % 2 == 0) {
+
 						}
 						int[] rowM = vista.getRowM();
 						int[] colM = vista.getColM();
@@ -196,12 +195,12 @@ public class controlador {
 						vista.resetRowM();
 						vista.resetColM();
 						if (estadoCliente) {
-							//displayBoard(getTablero());
+							// displayBoard(getTablero());
 							cl.sendDataToServer(s.serializeStringArray(getTablero()));
 						} else {
-							//displayBoard(getTablero());
+							// displayBoard(getTablero());
 							sr.sendDataToServer(s.serializeStringArray(getTablero()));
-							
+
 						}
 					}
 					try {
@@ -242,23 +241,21 @@ public class controlador {
 	public int[] getCordsOponnent(String[][] tabMol) {
 		// int row,col,rowM,colM;
 		int[] results = new int[4];
-		boolean firstIf=false;
 		for (int i = 0; i < tabMol.length; i++) {
 			for (int j = 0; j < tabMol[i].length; j++) {
-				System.out.println("Mensaje:"+ tabMol[i][j]);
-				System.out.println("Host:"+ this.tablero[i][j]);
-				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0 && tabMol[i][j].compareToIgnoreCase("") == 0 && !firstIf) {
-					results[2] = i;
-					results[3] = j;
-					firstIf=true;
-					System.out.println(results[2]+" "+results[3]);
-				}
-				else if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0
-						&& tabMol[i][j].compareToIgnoreCase("") != 0) {
-					results[0] = i;
-					results[1] = j;
+				// System.out.println("Mensaje:"+ tabMol[i][j]);
+				// System.out.println("Host:"+ this.tablero[i][j]);
+				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0) {
+					if (tabMol[i][j].compareToIgnoreCase("") == '0') {
+						results[0] = i;
+						results[1] = j;
+						// System.out.println(results[0]+" "+results[1]);
+					} else {
+						results[2] = i;
+						results[3] = j;
+						// System.out.println(results[2]+" "+results[3]);
+					}
 
-					System.out.println(results[0]+" "+results[1]);
 				}
 
 			}
@@ -278,7 +275,7 @@ public class controlador {
 
 				System.out.println("Movimiento no válido. Inténtelo de nuevo.");
 			}
-		}else{
+		} else {
 			System.out.println("Debe ser una pocisión diferente");
 		}
 
