@@ -51,7 +51,6 @@ public class Modelo {
 		
 			default:
 				moveResult = board.movePiece(row, col, newRow, newCol,players[0]);
-				System.out.println("Hola todo well");
 				break;
 		}
 		
