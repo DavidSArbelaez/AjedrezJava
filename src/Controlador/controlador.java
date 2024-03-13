@@ -246,14 +246,14 @@ public class controlador {
 				// System.out.println("Mensaje:"+ tabMol[i][j]);
 				// System.out.println("Host:"+ this.tablero[i][j]);
 				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0) {
-					if (tabMol[i][j].compareToIgnoreCase("") == '0') {
+					System.out.println(i+" "+j+" entrante "+tabMol[i][j]+" local "+this.tablero[i][j]);
+					if (this.tablero[i][j].equals("")) {
 						results[0] = i;
 						results[1] = j;
 						// System.out.println(results[0]+" "+results[1]);
 					} else {
 						results[2] = i;
 						results[3] = j;
-						// System.out.println(results[2]+" "+results[3]);
 					}
 
 				}
@@ -264,7 +264,8 @@ public class controlador {
 	}
 
 	public void turn(int fromCol, int fromRow, int toCol, int toRow) {
-
+		System.out.println("From:"+fromRow+" "+fromCol);
+		System.out.println("To:"+toRow+" "+toCol);
 		if (toCol != fromCol || toRow != fromRow) {
 			Boolean isValidTurn = this.modelo.Turn(turnNum, fromCol, fromRow, toCol, toRow);
 			if (isValidTurn) {
