@@ -37,7 +37,6 @@ public class Modelo {
 			case 0://El rey esta en jaque
 
 				moveResult = board.movePiece(row,col, newRow,newCol,players[0]);
-				System.out.println(moveResult);
 				if (!moveResult || checkTurn(players[0],players[1])!=4){
 					IPiece pi = board.getPieceAt(newRow, newCol);
 					pi.devolverMov(row, col);
@@ -67,7 +66,7 @@ public class Modelo {
 	 * @return 4 si no hay nada y se juega normal
 	 */
 	private int checkTurn(Player actuPlayer,Player atPlayer){
-		ChessBoard board = ChessBoard.getInstance();
+		//ChessBoard board = ChessBoard.getInstance();
 		GameRules rules = new GameRules();
 		if(rules.isKingInCheck(actuPlayer.getColor(),atPlayer.getColor())){
 			//System.out.println("Estas en jaque,no puedes realizar ese movimiento");
