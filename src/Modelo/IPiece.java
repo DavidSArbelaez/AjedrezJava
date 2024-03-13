@@ -25,7 +25,7 @@ public abstract class IPiece implements Cloneable {
 		ArrayList<Square> validMoves = getValidMoves();
 		if (validMove(pos, validMoves)) {
 			ChessBoard board = ChessBoard.getInstance();
-			board.resetSquare(pos);
+			board.resetSquare(this.currentPosition);
 			board.getSquares()[pos.getRow()][pos.getColumn()].setPiece(this);
 			return true;
 		} else {
