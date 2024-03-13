@@ -74,11 +74,13 @@ public class Modelo {
 	private int checkTurn(Player actuPlayer,Player atPlayer){
 		//ChessBoard board = ChessBoard.getInstance();
 		GameRules rules = new GameRules();
+		if(isGameOver()){
+			System.out.println("Fin del juego?"+isGameOver());
+			return 1;
+		}
 		if(rules.isKingInCheck(actuPlayer.getColor(),atPlayer.getColor())){
 			//System.out.println("Estas en jaque,no puedes realizar ese movimiento");
 			return 0;
-		}if(isGameOver()){
-			return 1;
 		}
 		/*if(){
 			return 2;
