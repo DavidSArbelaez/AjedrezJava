@@ -214,7 +214,6 @@ public class controlador {
 		});
 		thread.start();
 	}
-
 	public String[][] getTablero() {
 		return tablero;
 	}
@@ -246,7 +245,7 @@ public class controlador {
 				// System.out.println("Mensaje:"+ tabMol[i][j]);
 				// System.out.println("Host:"+ this.tablero[i][j]);
 				if (tabMol[i][j].compareToIgnoreCase(this.tablero[i][j]) != 0) {
-					System.out.println(i+" "+j+" entrante "+tabMol[i][j]+" local "+this.tablero[i][j]);
+					System.out.println(i + " " + j + " entrante " + tabMol[i][j] + " local " + this.tablero[i][j]);
 					if (this.tablero[i][j].equals("")) {
 						results[0] = i;
 						results[1] = j;
@@ -263,11 +262,12 @@ public class controlador {
 		return results;
 	}
 
-	public void turn(int fromCol, int fromRow, int toCol, int toRow) {
-		System.out.println("From:"+fromRow+" "+fromCol);
-		System.out.println("To:"+toRow+" "+toCol);
+	public boolean turn(int fromCol, int fromRow, int toCol, int toRow) {
+		System.out.println("From:" + fromRow + " " + fromCol);
+		System.out.println("To:" + toRow + " " + toCol);
+		Boolean isValidTurn = false;
 		if (toCol != fromCol || toRow != fromRow) {
-			Boolean isValidTurn = this.modelo.Turn(turnNum, fromCol, fromRow, toCol, toRow);
+			isValidTurn = this.modelo.Turn(turnNum, fromCol, fromRow, toCol, toRow);
 			if (isValidTurn) {
 				System.out.println("Movimiento válido. La pieza se ha movido.");
 				this.turnNum = this.turnNum + 1;
@@ -279,11 +279,13 @@ public class controlador {
 		} else {
 			System.out.println("Debe ser una pocisión diferente");
 		}
-
-		tablero = modelo.getBoard();
-		System.out.println("Tablero pos turno");
-		this.displayBoard(tablero);
-		vista.updateChessBoard(this.tablero);
+		if (isValidTurn) {
+			tablero = modelo.getBoard();
+			System.out.println("Tablero pos turno");
+			this.displayBoard(tablero);
+			vista.updateChessBoard(this.tablero);
+		}
+		return isValidTurn;
 
 	}
 }
