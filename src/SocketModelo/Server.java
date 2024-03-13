@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -19,6 +20,9 @@ public class Server {
         this.port = PORT;
         try {
             serverSocket = new ServerSocket(this.port);
+            InetAddress direccion = InetAddress.getLocalHost();
+            String ip = direccion.getHostAddress();
+            System.out.println("La dirección IP del PC local es: " + ip);
             System.out.println("Servidor iniciado. Esperando conexiones...");
         } catch (IOException e) {
             System.err.println("Error: " + e.getMessage());
