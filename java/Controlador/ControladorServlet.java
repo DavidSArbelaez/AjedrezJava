@@ -23,8 +23,7 @@ public class ControladorServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        // Llama al método estático de HTMLHelper para generar el contenido HTML
-        ServletHelper.generarContenidoHTML(out);
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
