@@ -1,0 +1,33 @@
+@charset "UTF-8";
+    body{
+            background: white;
+            width: 500px;
+            height: 500px;
+            font-family: sans-serif;
+            text-align: center;
+            border: 2px solid black;
+            margin: auto;
+            }
+
+        #table {
+            margin: auto;
+            width: 500px;
+            height: 500px;
+            border-collapse: collapse;
+
+
+        }
+        #white {
+            width: 12,5%;
+            height: 12,5%;
+            background-color: white;
+
+
+        }
+
+        #black {
+            width: 12,5%;
+            height: 12,5%;
+            background-color: black;
+
+        }
