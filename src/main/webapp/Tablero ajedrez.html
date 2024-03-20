@@ -1,101 +1,114 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-    <title>Tablero Ajedrez</title>
-    
-    <meta charset="utf-8" />
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="tablero-ajedrez-style.css">
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajedrez</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 50px);
+            grid-template-rows: repeat(8, 50px);
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #eee;
+        }
+        .cell:nth-child(even) {
+            background-color: #aaa;
+        }
+    </style>
 </head>
-
 <body>
-    <table id="table">
-        <tr id="tr">
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-        </tr>
-        <tr id="tr">
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            
-        </tr>    
-        <tr id="tr">
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-        </tr>    
-        <tr id="tr">
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            
-        </tr>    
-        <tr id="tr">
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-        </tr>    
-        <tr id="tr">
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            
-        </tr>    
-        <tr id="tr">
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-        </tr>    
-        <tr id="tr">
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            <td id="black"></td>
-            <td id="white"></td>
-            
-        </tr>    
-    </table>
+    <div class="board">
+        <!-- Creamos las casillas del tablero -->
+        <!-- Utilizamos IDs para identificar cada casilla -->
+        <!-- El formato de los IDs es letra de la columna + número de la fila -->
+        <button id="a8" class="cell"></button>
+        <button id="b8" class="cell"></button>
+        <button id="c8" class="cell"></button>
+        <button id="d8" class="cell"></button>
+        <button id="e8" class="cell"></button>
+        <button id="f8" class="cell"></button>
+        <button id="g8" class="cell"></button>
+        <button id="h8" class="cell"></button>
 
+        <button id="a7" class="cell"></button>
+        <button id="b7" class="cell"></button>
+        <button id="c7" class="cell"></button>
+        <button id="d7" class="cell"></button>
+        <button id="e7" class="cell"></button>
+        <button id="f7" class="cell"></button>
+        <button id="g7" class="cell"></button>
+        <button id="h7" class="cell"></button>
+
+        <button id="a6" class="cell"></button>
+        <button id="b6" class="cell"></button>
+        <button id="c6" class="cell"></button>
+        <button id="d6" class="cell"></button>
+        <button id="e6" class="cell"></button>
+        <button id="f6" class="cell"></button>
+        <button id="g6" class="cell"></button>
+        <button id="h6" class="cell"></button>
+
+        <button id="a5" class="cell"></button>
+        <button id="b5" class="cell"></button>
+        <button id="c5" class="cell"></button>
+        <button id="d5" class="cell"></button>
+        <button id="e5" class="cell"></button>
+        <button id="f5" class="cell"></button>
+        <button id="g5" class="cell"></button>
+        <button id="h5" class="cell"></button>
+
+        <button id="a4" class="cell"></button>
+        <button id="b4" class="cell"></button>
+        <button id="c4" class="cell"></button>
+        <button id="d4" class="cell"></button>
+        <button id="e4" class="cell"></button>
+        <button id="f4" class="cell"></button>
+        <button id="g4" class="cell"></button>
+        <button id="h4" class="cell"></button>
+
+        <button id="a3" class="cell"></button>
+        <button id="b3" class="cell"></button>
+        <button id="c3" class="cell"></button>
+        <button id="d3" class="cell"></button>
+        <button id="e3" class="cell"></button>
+        <button id="f3" class="cell"></button>
+        <button id="g3" class="cell"></button>
+        <button id="h3" class="cell"></button>
+
+        <button id="a2" class="cell"></button>
+        <button id="b2" class="cell"></button>
+        <button id="c2" class="cell"></button>
+        <button id="d2" class="cell"></button>
+        <button id="e2" class="cell"></button>
+        <button id="f2" class="cell"></button>
+        <button id="g2" class="cell"></button>
+        <button id="h2" class="cell"></button>
+
+        <button id="a1" class="cell"></button>
+        <button id="b1" class="cell"></button>
+        <button id="c1" class="cell"></button>
+        <button id="d1" class="cell"></button>
+        <button id="e1" class="cell"></button>
+        <button id="f1" class="cell"></button>
+        <button id="g1" class="cell"></button>
+        <button id="h1" class="cell"></button>
+    </div>
+
+    <script>
+        // Agregamos un event listener a cada botón para detectar el clic
+        const cells = document.querySelectorAll('.cell');
+        cells.forEach(cell => {
+            cell.addEventListener('click', () => {
+                alert('Clic en la casilla ' + cell.id);
+            });
+        });
+    </script>
 </body>
+</html>
